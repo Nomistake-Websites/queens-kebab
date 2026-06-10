@@ -49,22 +49,40 @@ export function ContactBlock() {
 
       <div className="card p-6 lg:col-span-2">
         <p className="eyebrow">{t(translations.common.address)}</p>
-        <ul className="mt-4 grid gap-4 sm:grid-cols-3">
-          {LOCATIONS.map((loc) => (
-            <li key={loc.id} className="border-l-2 border-brand-red/60 pl-3">
-              <p className="text-sm font-semibold text-white">{t(loc.name)}</p>
-              <p className="text-sm text-white/65">{loc.address}</p>
-              <a
-                href={loc.directionsUrl}
-                target="_blank"
-                rel="noreferrer noopener"
-                className="mt-2 inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-brand-red transition hover:text-brand-redSoft"
+        {/*
+          4 branches now (Žižkov, Karlín, Vršovice, Bohnice).
+          Grid scales: 1 col mobile · 2 cols sm · 4 cols xl.
+        */}
+        <ul className="mt-4 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          {LOCATIONS.map((loc) => {
+            const coming = loc.comingSoon === true;
+            return (
+              <li
+                key={loc.id}
+                className={`border-l-2 pl-3 ${
+                  coming ? "border-brand-gold/60" : "border-brand-red/60"
+                }`}
               >
-                {t(translations.common.openMaps)}
-                <ArrowUpRight className="h-3 w-3" strokeWidth={2} />
-              </a>
-            </li>
-          ))}
+                <p className="text-sm font-semibold text-white">{t(loc.name)}</p>
+                <p className="text-sm text-white/65">{loc.address}</p>
+                {coming ? (
+                  <p className="mt-1 text-xs italic text-brand-cream/70">
+                    ({t(translations.common.comingSoonInline)})
+                  </p>
+                ) : (
+                  <a
+                    href={loc.directionsUrl}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="mt-2 inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-brand-red transition hover:text-brand-redSoft"
+                  >
+                    {t(translations.common.openMaps)}
+                    <ArrowUpRight className="h-3 w-3" strokeWidth={2} />
+                  </a>
+                )}
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>

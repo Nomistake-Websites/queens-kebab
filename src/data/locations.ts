@@ -12,17 +12,32 @@ export interface Location {
   directionsUrl: string;
   /** Google review URL placeholder – replace with the exact "write review" link per branch. */
   reviewUrl: string;
-  /** Delivery platform links. Leave as null until you have the exact URL. */
+  /**
+   * Delivery platform links. Use `null` (or omit) until you have the exact URL.
+   *
+   * Note: `foodora` was previously named `dame` (Dáme jídlo). Foodora acquired
+   * Dáme jídlo in CZ, so the platform now lives under foodora.cz.
+   */
   delivery: {
-    wolt?: string;
-    bolt?: string;
-    dame?: string;
+    wolt?: string | null;
+    bolt?: string | null;
+    foodora?: string | null;
   };
   /** Coordinates for JSON-LD (optional, edit to exact values). */
   geo?: { lat: number; lng: number };
+  /**
+   * When true, the branch is shown as "coming soon":
+   *  - LocationCard renders an overlay with a PŘIPRAVUJEME / COMING SOON badge
+   *  - Maps and Call buttons are disabled
+   *  - Order section blurs the delivery platforms with a notice
+   *  - Contact section adds a "(Připravujeme)" inline label
+   *  - JSON-LD skips the branch
+   */
+  comingSoon?: boolean;
 }
 
 const PHONE = "+420799022871";
+const BOHNICE_PHONE = "+420774668988";
 
 export const LOCATIONS: Location[] = [
   {
@@ -40,9 +55,11 @@ export const LOCATIONS: Location[] = [
     reviewUrl:
       "https://search.google.com/local/writereview?placeid=REPLACE_WITH_PLACE_ID_ZIZKOV",
     delivery: {
-      wolt: "https://wolt.com/cs/cze/prague/restaurant/queens-kebab-zizkov",
-      bolt: "https://food.bolt.eu/en-US/82/p/queens-kebab-zizkov",
-      dame: "https://www.damejidlo.cz/restaurace/queens-kebab-zizkov",
+      wolt:
+        "https://wolt.com/en/cze/prague/restaurant/queens-kebab-seifertova?srsltid=AfmBOooPXb-ZAZ8X6UPQhbdc_qusSzYUCkLpUMYjI05E1gG6gVXXYf5L",
+      bolt: "https://food.bolt.eu/en/271-prague/p/6650-queens-kebab-seifertova/",
+      foodora:
+        "https://www.foodora.cz/restaurant/dcvz/queens-kebab-and-turkish-foods-dcvz",
     },
     geo: { lat: 50.0809, lng: 14.4488 },
   },
@@ -61,9 +78,12 @@ export const LOCATIONS: Location[] = [
     reviewUrl:
       "https://search.google.com/local/writereview?placeid=REPLACE_WITH_PLACE_ID_KARLIN",
     delivery: {
-      wolt: "https://wolt.com/cs/cze/prague/restaurant/queens-kebab-karlin",
-      bolt: "https://food.bolt.eu/en-US/82/p/queens-kebab-karlin",
-      dame: "https://www.damejidlo.cz/restaurace/queens-kebab-karlin",
+      wolt:
+        "https://wolt.com/en/cze/prague/restaurant/queens-kebab-karlin?srsltid=AfmBOoqLgH1kesjFxELSMJ1VeiteLd-7Gpstsbis8EbW5Bhz_ZHCVGL0",
+      bolt: "https://food.bolt.eu/en/271-prague/p/6649-queens-kebab-sokolovska/",
+      // Foodora intentionally shared with Žižkov — same operator listing.
+      foodora:
+        "https://www.foodora.cz/restaurant/dcvz/queens-kebab-and-turkish-foods-dcvz",
     },
     geo: { lat: 50.0937, lng: 14.4476 },
   },
@@ -82,16 +102,46 @@ export const LOCATIONS: Location[] = [
     reviewUrl:
       "https://search.google.com/local/writereview?placeid=REPLACE_WITH_PLACE_ID_VRSOVICE",
     delivery: {
-      wolt: "https://wolt.com/cs/cze/prague/restaurant/queens-kebab-vrsovice",
-      bolt: "https://food.bolt.eu/en-US/82/p/queens-kebab-vrsovice",
-      dame: "https://www.damejidlo.cz/restaurace/queens-kebab-vrsovice",
+      wolt:
+        "https://wolt.com/en/cze/prague/restaurant/queens-kebab-eden?srsltid=AfmBOorYUKSqfr2IsTzyBybBkRuGgmXVO4q0QvmRbVQW1OOBF43E_jWB",
+      bolt: "https://food.bolt.eu/uk-ua/271-prague/p/37816-queens-kebab-oc-eden/",
+      foodora: "https://www.foodora.cz/restaurant/ph6c/queens-kebab-oc-eden",
     },
     geo: { lat: 50.0686, lng: 14.4626 },
+  },
+  {
+    id: "bohnice",
+    name: { cs: "Queen's Kebab Bohnice", en: "Queen's Kebab Bohnice" },
+    address: "Lodžská 399/29, 181 00 Praha 8",
+    district: { cs: "Bohnice", en: "Bohnice" },
+    phone: BOHNICE_PHONE,
+    openingHours: {
+      cs: "Po–Ne 10:00 – 23:00",
+      en: "Mon–Sun 10:00 – 23:00",
+    },
+    directionsUrl:
+      "https://www.google.com/maps/dir/?api=1&destination=Lod%C5%BEsk%C3%A1+399%2F29+Praha+8",
+    reviewUrl:
+      "https://search.google.com/local/writereview?placeid=REPLACE_WITH_PLACE_ID_BOHNICE",
+    delivery: {
+      wolt: null,
+      bolt: null,
+      foodora: null,
+    },
+    geo: { lat: 50.1289, lng: 14.4221 },
+    comingSoon: true,
   },
 ];
 
 export const PRIMARY_PHONE_DISPLAY = "+420 799 022 871";
 export const PRIMARY_PHONE_TEL = PHONE;
+
+export const BOHNICE_PHONE_DISPLAY = "+420 774 668 988";
+
+/** Convenience: branches that are actually open for service. */
+export const ACTIVE_LOCATIONS: Location[] = LOCATIONS.filter(
+  (l) => !l.comingSoon,
+);
 
 export const GOOGLE_RATING = {
   score: 4.6,

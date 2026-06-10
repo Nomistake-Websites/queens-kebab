@@ -57,7 +57,7 @@ export const translations = {
     },
     locations: {
       eyebrow: { cs: "Pobočky", en: "Locations" },
-      title: { cs: "Tři místa v Praze", en: "Three spots in Prague" },
+      title: { cs: "Čtyři místa v Praze", en: "Four spots in Prague" },
       subtitle: {
         cs: "Najděte nejbližší pobočku a stavte se. Otevřeno každý den.",
         en: "Find the nearest branch and drop by. Open every day.",
@@ -130,10 +130,10 @@ export const translations = {
         },
       },
       {
-        title: { cs: "Tři pobočky", en: "Three branches" },
+        title: { cs: "Čtyři místa v Praze", en: "Four spots in Prague" },
         body: {
-          cs: "Žižkov, Karlín a Vršovice. Otevřeno každý den.",
-          en: "Žižkov, Karlín and Vršovice. Open every day.",
+          cs: "Žižkov, Karlín, Vršovice a brzy také Bohnice. Otevřeno každý den.",
+          en: "Žižkov, Karlín, Vršovice and Bohnice coming soon. Open every day.",
         },
       },
       {
@@ -193,9 +193,13 @@ export const translations = {
   order: {
     wolt: { cs: "Objednat na Wolt", en: "Order on Wolt" },
     bolt: { cs: "Objednat na Bolt Food", en: "Order on Bolt Food" },
-    dame: { cs: "Objednat na Dáme jídlo", en: "Order on Dáme jídlo" },
+    foodora: { cs: "Objednat na Foodora", en: "Order on Foodora" },
     call: { cs: "Zavolat na pobočku", en: "Call the branch" },
     directions: { cs: "Trasa Google Maps", en: "Google Maps directions" },
+    comingSoonNotice: {
+      cs: "Pro tuto pobočku rozvoz teprve připravujeme. Již brzy!",
+      en: "Delivery for this branch is coming soon. Stay tuned!",
+    },
   },
   footer: {
     rights: {
@@ -222,6 +226,9 @@ export const translations = {
     backToTop: { cs: "Nahoru", en: "Back to top" },
     back: { cs: "Zpět", en: "Back" },
     backToHome: { cs: "Zpět na hlavní stránku", en: "Back to main page" },
+    comingSoon: { cs: "PŘIPRAVUJEME", en: "COMING SOON" },
+    comingSoonInline: { cs: "Připravujeme", en: "Coming soon" },
+    comingSoonShort: { cs: "Teprve bude", en: "Coming soon" },
   },
 } as const;
 

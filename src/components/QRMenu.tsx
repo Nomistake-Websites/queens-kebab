@@ -206,7 +206,7 @@ export function QRMenu() {
             href={
               branch.delivery.wolt ??
               branch.delivery.bolt ??
-              branch.delivery.dame ??
+              branch.delivery.foodora ??
               "#"
             }
             target="_blank"

@@ -72,7 +72,14 @@ export function Footer() {
           <ul className="space-y-3 text-sm text-white/75">
             {LOCATIONS.map((loc) => (
               <li key={loc.id}>
-                <p className="font-semibold text-white">{t(loc.district)}</p>
+                <p className="flex flex-wrap items-center gap-2 font-semibold text-white">
+                  {t(loc.district)}
+                  {loc.comingSoon && (
+                    <span className="rounded-full border border-brand-gold/40 bg-brand-gold/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-brand-cream">
+                      {t(translations.common.comingSoonInline)}
+                    </span>
+                  )}
+                </p>
                 <p className="text-white/55">{loc.address}</p>
               </li>
             ))}

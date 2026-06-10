@@ -38,7 +38,8 @@ export default function HomePage() {
         className="bg-ink-900/40"
         decorated="city"
       >
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {/* 1 / 2 / 2 / 4 columns — scales gracefully now that we have 4 branches. */}
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
           {LOCATIONS.map((loc, i) => (
             <LocationCard key={loc.id} location={loc} index={i} />
           ))}

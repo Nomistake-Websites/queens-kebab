@@ -5,7 +5,8 @@ import { SOCIALS, SITE_URL, BRAND } from "@/data/socials";
 export function buildRestaurantJsonLd() {
   const sameAs = [SOCIALS.instagram, SOCIALS.facebook];
 
-  const branches = LOCATIONS.map((loc) => ({
+  // Don't expose coming-soon branches to search engines — they aren't open yet.
+  const branches = LOCATIONS.filter((loc) => !loc.comingSoon).map((loc) => ({
     "@context": "https://schema.org",
     "@type": "Restaurant",
     "@id": `${SITE_URL}/#${loc.id}`,
