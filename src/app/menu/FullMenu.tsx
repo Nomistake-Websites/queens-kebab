@@ -13,9 +13,10 @@ import { ArrowLeft, ArrowRight, Clock, Search } from "lucide-react";
 import { DishCard } from "@/components/DishCard";
 import {
   MENU_CATEGORY_ORDER,
-  MENU_FILTER_ORDER,
   MENU_ITEMS,
+  getBranchMenu,
   getByCategory,
+  type BranchMenu,
   type MenuCategoryId,
 } from "@/data/menu";
 import { LOCATIONS, type Location } from "@/data/locations";
@@ -33,9 +34,28 @@ export function FullMenu() {
   const firstActive = activeLocations.find((l) => !l.comingSoon) ?? LOCATIONS[0];
   const [branch, setBranch] = useState<Location>(firstActive);
   const [query, setQuery] = useState("");
-  const [activeCat, setActiveCat] = useState<MenuCategoryId>("bestsellers");
   const hasHistoryRef = useRef(false);
   const branchComing = branch.comingSoon === true;
+
+  // Menu for the selected branch (falls back to the full Karlín menu).
+  const branchMenu: BranchMenu = useMemo(
+    () =>
+      getBranchMenu(branch.id) ?? {
+        items: MENU_ITEMS,
+        categories: MENU_CATEGORY_ORDER,
+      },
+    [branch.id],
+  );
+  const branchCategories = branchMenu.categories;
+
+  const [activeCat, setActiveCat] = useState<MenuCategoryId>(
+    branchCategories[0],
+  );
+
+  // Reset the active category when the branch (and its categories) change.
+  useEffect(() => {
+    setActiveCat(branchCategories[0]);
+  }, [branchCategories]);
 
   useEffect(() => {
     hasHistoryRef.current = window.history.length > 1;
@@ -74,19 +94,19 @@ export function FullMenu() {
 
   const searchResults = useMemo(() => {
     if (!searching) return [];
-    return MENU_ITEMS.filter(
+    return branchMenu.items.filter(
       (i) =>
         i.name[lang].toLowerCase().includes(q) ||
         i.description[lang].toLowerCase().includes(q),
     );
-  }, [searching, q, lang]);
+  }, [searching, q, lang, branchMenu.items]);
 
   // Scroll-spy: highlight the category pill for the section in view.
   useEffect(() => {
     if (branchComing || searching) return;
-    const sections = MENU_CATEGORY_ORDER.map((c) =>
-      document.getElementById(sectionId(c)),
-    ).filter((el): el is HTMLElement => !!el);
+    const sections = branchCategories
+      .map((c) => document.getElementById(sectionId(c)))
+      .filter((el): el is HTMLElement => !!el);
     if (sections.length === 0) return;
 
     const io = new IntersectionObserver(
@@ -103,7 +123,7 @@ export function FullMenu() {
     );
     sections.forEach((s) => io.observe(s));
     return () => io.disconnect();
-  }, [branchComing, searching]);
+  }, [branchComing, searching, branchCategories]);
 
   const jumpTo = (cat: MenuCategoryId) => {
     setActiveCat(cat);
@@ -229,7 +249,7 @@ export function FullMenu() {
               </div>
               {!searching && (
                 <div className="hide-scrollbar -mx-4 flex gap-2 overflow-x-auto px-4 sm:mx-0 sm:px-0">
-                  {MENU_FILTER_ORDER.filter((c) => c !== "bestsellers").map((cat) => {
+                  {branchCategories.map((cat) => {
                     const isActive = activeCat === cat;
                     return (
                       <button
@@ -267,8 +287,8 @@ export function FullMenu() {
             )
           ) : (
             <div className="space-y-14">
-              {MENU_CATEGORY_ORDER.map((cat, catIdx) => {
-                const items = getByCategory(cat);
+              {branchCategories.map((cat, catIdx) => {
+                const items = getByCategory(cat, branchMenu.items);
                 if (items.length === 0) return null;
                 return (
                   <section
@@ -297,6 +317,16 @@ export function FullMenu() {
                   </section>
                 );
               })}
+
+              {/* Reduced-menu note for branches still being filled out */}
+              {branchMenu.limited && (
+                <p className="rounded-2xl border border-white/5 bg-white/[0.03] px-5 py-4 text-center text-sm text-white/55">
+                  {t({
+                    cs: "Další položky pro tuto pobočku připravujeme.",
+                    en: "More items for this branch are coming soon.",
+                  })}
+                </p>
+              )}
             </div>
           )}
         </>

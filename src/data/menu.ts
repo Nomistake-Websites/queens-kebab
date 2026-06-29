@@ -13,6 +13,7 @@ export type MenuCategoryId =
   | "special"
   | "salad"
   | "combo"
+  | "kebab-menu"
   | "drinks"
   | "sides";
 
@@ -727,6 +728,386 @@ export const MENU_ITEMS: MenuItem[] = [
   },
 ];
 
+/**
+ * ─────────────────────────────────────────────────────────────────────────
+ * Žižkov branch menu (Seifertova 33, 130 00 Praha 3)
+ *
+ * Only the categories confirmed for Žižkov are listed. The "Kebab menu"
+ * category (combos) replaces the longer Karlín category set. A few prices /
+ * the vegetarian ordering differ from Karlín, so this is a separate dataset.
+ * ─────────────────────────────────────────────────────────────────────────
+ */
+export const ZIZKOV_MENU_ITEMS: MenuItem[] = [
+  // ── 1. Döner kebab talíř ────────────────────────────────────────────────
+  {
+    id: "zz-maly-talir",
+    number: 1,
+    category: "doner-plate",
+    name: { cs: "Malý talíř", en: "Small plate" },
+    description: { cs: "Kebab, salát, dressing", en: "Kebab, salad, dressing" },
+    price: "185 Kč",
+    image: IMG("kebab-plate.webp"),
+  },
+  {
+    id: "zz-maly-talir-hranolky",
+    number: 2,
+    category: "doner-plate",
+    name: {
+      cs: "Malý talíř s hranolky / rýží",
+      en: "Small plate with fries / rice",
+    },
+    description: {
+      cs: "Kebab, salát, dressing, hranolky nebo rýže",
+      en: "Kebab, salad, dressing, fries or rice",
+    },
+    price: "205 Kč",
+    image: IMG("doner-kebab-plate-with-fries.webp"),
+  },
+  {
+    id: "zz-velky-talir",
+    number: 3,
+    category: "doner-plate",
+    name: { cs: "Velký talíř", en: "Large plate" },
+    description: {
+      cs: "Extra kebab, salát, dressing",
+      en: "Extra kebab, salad, dressing",
+    },
+    price: "215 Kč",
+    image: IMG("kebab-plate.webp"),
+  },
+  {
+    id: "zz-velky-talir-hranolky",
+    number: 4,
+    category: "doner-plate",
+    name: {
+      cs: "Velký talíř s hranolky / rýží",
+      en: "Large plate with fries / rice",
+    },
+    description: {
+      cs: "Extra kebab, salát, dressing, hranolky nebo rýže",
+      en: "Extra kebab, salad, dressing, fries or rice",
+    },
+    price: "235 Kč",
+    image: IMG("doner-kebab-plate-with-fries.webp"),
+  },
+  {
+    id: "zz-iskender-talir",
+    number: 5,
+    category: "doner-plate",
+    name: { cs: "Iskender kebab talíř", en: "Iskender kebab plate" },
+    description: {
+      cs: "Kebab, jogurt, rajčata, pita, iskender dressing",
+      en: "Kebab, yogurt, tomatoes, pita, iskender dressing",
+    },
+    price: "279 Kč",
+    image: IMG("iskender-kebab-plate.webp"),
+  },
+
+  // ── 2. Kebab v pita chlebu ──────────────────────────────────────────────
+  {
+    id: "zz-klasicky-kebab",
+    number: 6,
+    category: "pita",
+    name: { cs: "Klasický kebab", en: "Classic kebab" },
+    description: { cs: "Kebab, salát, dressing", en: "Kebab, salad, dressing" },
+    price: "169 Kč",
+    image: IMG("pita-kebab.webp"),
+    tags: ["bestseller", "halal"],
+  },
+  {
+    id: "zz-klasicky-kebab-syr",
+    number: 7,
+    category: "pita",
+    name: { cs: "Klasický kebab se sýrem", en: "Classic kebab with cheese" },
+    description: {
+      cs: "Kebab, salát, dressing, sýr",
+      en: "Kebab, salad, dressing, cheese",
+    },
+    price: "175 Kč",
+    image: IMG("pita-kebab-with-cheese.webp"),
+    tags: ["halal"],
+  },
+  {
+    id: "zz-mega-kebab",
+    number: 8,
+    category: "pita",
+    name: { cs: "Mega kebab", en: "Mega kebab" },
+    description: {
+      cs: "Extra kebab, salát, dressing",
+      en: "Extra kebab, salad, dressing",
+    },
+    price: "199 Kč",
+    image: IMG("mega-pita-kebab.webp"),
+    tags: ["halal"],
+  },
+  {
+    id: "zz-specialni-kebab",
+    number: 9,
+    category: "pita",
+    name: { cs: "Speciální kebab", en: "Special kebab" },
+    description: { cs: "Jen kebab a dressing", en: "Kebab and dressing only" },
+    price: "199 Kč",
+    image: IMG("special-kebab-pita-with-mostly-grilled-meat.webp"),
+    tags: ["halal"],
+  },
+
+  // ── 3. Dürüm kebab ──────────────────────────────────────────────────────
+  {
+    id: "zz-klasicky-durum",
+    number: 10,
+    category: "durum",
+    name: { cs: "Klasický dürüm", en: "Classic dürüm" },
+    description: {
+      cs: "Kebab, tortilla, salát, dressing",
+      en: "Kebab, tortilla, salad, dressing",
+    },
+    price: "169 Kč",
+    image: IMG("classic-durum-kebab-wrap.webp"),
+    tags: ["bestseller", "halal"],
+  },
+  {
+    id: "zz-klasicky-durum-syr",
+    number: 11,
+    category: "durum",
+    name: { cs: "Klasický dürüm se sýrem", en: "Classic dürüm with cheese" },
+    description: {
+      cs: "Kebab, tortilla, salát, dressing, sýr",
+      en: "Kebab, tortilla, salad, dressing, cheese",
+    },
+    price: "175 Kč",
+    image: IMG("durum-kebab-wrap-with-cheese.webp"),
+    tags: ["halal"],
+  },
+  {
+    id: "zz-mega-durum",
+    number: 12,
+    category: "durum",
+    name: { cs: "Mega dürüm", en: "Mega dürüm" },
+    description: {
+      cs: "Extra kebab, tortilla, salát, dressing",
+      en: "Extra kebab, tortilla, salad, dressing",
+    },
+    price: "199 Kč",
+    image: IMG("mega-durum-kebab-wrap.webp"),
+    tags: ["halal"],
+  },
+  {
+    id: "zz-specialni-durum",
+    number: 13,
+    category: "durum",
+    name: { cs: "Speciální dürüm", en: "Special dürüm" },
+    description: {
+      cs: "Jen kebab, tortilla a dressing",
+      en: "Kebab, tortilla and dressing only",
+    },
+    price: "205 Kč",
+    image: IMG("special-durum-wrap-with-mostly-grilled-meat.webp"),
+    tags: ["halal"],
+  },
+  {
+    id: "zz-klasicky-durum-hranolky",
+    number: 14,
+    category: "durum",
+    name: { cs: "Klasický dürüm s hranolky", en: "Classic dürüm with fries" },
+    description: {
+      cs: "Kebab, tortilla, salát, dressing a hranolky",
+      en: "Kebab, tortilla, salad, dressing and fries",
+    },
+    price: "205 Kč",
+    image: IMG("durum-kebab-wrap-with-fries-inside.webp"),
+    tags: ["halal"],
+  },
+
+  // ── 4. Vegetarian menu ──────────────────────────────────────────────────
+  {
+    id: "zz-vegetarian-talir",
+    number: 15,
+    category: "vegetarian",
+    name: { cs: "Vegetarian talíř", en: "Vegetarian plate" },
+    description: {
+      cs: "Na výběr: falafel, halloumi nebo vegan köfte",
+      en: "Choice of: falafel, halloumi or vegan köfte",
+    },
+    price: "175 Kč",
+    image: IMG("vegetarian-turkish-plate.webp"),
+    tags: ["vegetarian"],
+  },
+  {
+    id: "zz-falafel-durum",
+    number: 16,
+    category: "vegetarian",
+    name: { cs: "Falafel dürüm", en: "Falafel dürüm" },
+    description: {
+      cs: "Falafel, tortilla, salát, dressing",
+      en: "Falafel, tortilla, salad, dressing",
+    },
+    price: "159 Kč",
+    image: IMG("falafel-durum-wrap.webp"),
+    tags: ["vegetarian"],
+  },
+  {
+    id: "zz-halloumi-durum",
+    number: 17,
+    category: "vegetarian",
+    name: { cs: "Halloumi dürüm", en: "Halloumi dürüm" },
+    description: {
+      cs: "Halloumi, tortilla, salát, dressing",
+      en: "Halloumi, tortilla, salad, dressing",
+    },
+    price: "159 Kč",
+    image: IMG("halloumi-durum-wrap.webp"),
+    tags: ["vegetarian"],
+  },
+  {
+    id: "zz-vegan-kofte-durum",
+    number: 18,
+    category: "vegetarian",
+    name: { cs: "Vegan köfte dürüm", en: "Vegan köfte dürüm" },
+    description: {
+      cs: "Vegan köfte, tortilla, salát, dressing",
+      en: "Vegan köfte, tortilla, salad, dressing",
+    },
+    price: "169 Kč",
+    image: IMG("vegan-kofte-durum-wrap.webp"),
+    tags: ["vegetarian"],
+  },
+  {
+    id: "zz-vegetarian-box",
+    number: 19,
+    category: "vegetarian",
+    name: { cs: "Vegetarian box", en: "Vegetarian box" },
+    description: {
+      cs: "Falafel nebo halloumi, salát, dressing",
+      en: "Falafel or halloumi, salad, dressing",
+    },
+    price: "159 Kč",
+    image: IMG("vegetarian-kebab-box.webp"),
+    tags: ["vegetarian"],
+  },
+
+  // ── 5. Box kebab ────────────────────────────────────────────────────────
+  {
+    id: "zz-maly-box",
+    number: 20,
+    category: "box",
+    name: { cs: "Malý box", en: "Small box" },
+    description: { cs: "Kebab, salát, dressing", en: "Kebab, salad, dressing" },
+    price: "145 Kč",
+    image: IMG("kebab-box.webp"),
+    tags: ["bestseller", "halal"],
+  },
+  {
+    id: "zz-maly-box-hranolky",
+    number: 21,
+    category: "box",
+    name: { cs: "Malý box s hranolky", en: "Small box with fries" },
+    description: {
+      cs: "Kebab, salát, dressing a hranolky",
+      en: "Kebab, salad, dressing and fries",
+    },
+    price: "155 Kč",
+    image: IMG("kebab-box-with-fries.webp"),
+    tags: ["halal"],
+  },
+  {
+    id: "zz-velky-box",
+    number: 22,
+    category: "box",
+    name: { cs: "Velký box", en: "Large box" },
+    description: {
+      cs: "Extra kebab, salát, dressing",
+      en: "Extra kebab, salad, dressing",
+    },
+    price: "165 Kč",
+    image: IMG("kebab-box.webp"),
+    tags: ["halal"],
+  },
+  {
+    id: "zz-velky-box-hranolky",
+    number: 23,
+    category: "box",
+    name: { cs: "Velký box s hranolky", en: "Large box with fries" },
+    description: {
+      cs: "Extra kebab, salát, dressing a hranolky",
+      en: "Extra kebab, salad, dressing and fries",
+    },
+    price: "175 Kč",
+    image: IMG("kebab-box-with-fries.webp"),
+    tags: ["halal"],
+  },
+  {
+    id: "zz-specialni-box",
+    number: 24,
+    category: "box",
+    name: { cs: "Speciální box", en: "Special box" },
+    description: { cs: "Kebab, hranolky, dressing", en: "Kebab, fries, dressing" },
+    price: "179 Kč",
+    image: IMG("special-kebab-box.webp"),
+    tags: ["halal"],
+  },
+
+  // ── 6. Kebab menu ───────────────────────────────────────────────────────
+  {
+    id: "zz-doner-cola",
+    number: 25,
+    category: "kebab-menu",
+    name: { cs: "Döner kebab + Cola 330 ml", en: "Döner kebab + Cola 330 ml" },
+    description: { cs: "Döner kebab s nápojem", en: "Döner kebab with a drink" },
+    price: "195 Kč",
+    image: IMG("doner-kebab-meal-combo.webp"),
+    tags: ["bestseller"],
+  },
+  {
+    id: "zz-doner-cola-hranolky",
+    number: 26,
+    category: "kebab-menu",
+    name: {
+      cs: "Döner kebab + Cola 330 ml + hranolky",
+      en: "Döner kebab + Cola 330 ml + fries",
+    },
+    description: {
+      cs: "Döner kebab s nápojem a hranolkami",
+      en: "Döner kebab with a drink and fries",
+    },
+    price: "245 Kč",
+    image: IMG("doner-kebab-combo-meal-with-fries-cola.webp"),
+  },
+  {
+    id: "zz-durum-cola",
+    number: 27,
+    category: "kebab-menu",
+    name: { cs: "Dürüm kebab + Cola 330 ml", en: "Dürüm kebab + Cola 330 ml" },
+    description: { cs: "Dürüm kebab s nápojem", en: "Dürüm kebab with a drink" },
+    price: "195 Kč",
+    image: IMG("durum-kebab-combo-cola.webp"),
+  },
+  {
+    id: "zz-durum-cola-hranolky",
+    number: 28,
+    category: "kebab-menu",
+    name: {
+      cs: "Dürüm kebab + Cola 330 ml + hranolky",
+      en: "Dürüm kebab + Cola 330 ml + fries",
+    },
+    description: {
+      cs: "Dürüm kebab s nápojem a hranolkami",
+      en: "Dürüm kebab with a drink and fries",
+    },
+    price: "245 Kč",
+    image: IMG("durum-kebab-combo-with-fries-cola.webp"),
+  },
+];
+
+/** Category order for the Žižkov branch (confirmed categories only). */
+export const ZIZKOV_CATEGORY_ORDER: MenuCategoryId[] = [
+  "doner-plate",
+  "pita",
+  "durum",
+  "vegetarian",
+  "box",
+  "kebab-menu",
+];
+
 /** Items explicitly tagged as bestsellers (used by the landing preview). */
 export function getBestsellers(items: MenuItem[] = MENU_ITEMS): MenuItem[] {
   return items.filter((i) => i.tags?.includes("bestseller"));
@@ -776,3 +1157,32 @@ export const FOOD_IMAGE_SRCS: string[] = Array.from(
     MENU_ITEMS.map((i) => i.image).filter((src): src is string => Boolean(src)),
   ),
 );
+
+export interface BranchMenu {
+  items: MenuItem[];
+  /** Ordered real categories (no "bestsellers" virtual filter). */
+  categories: MenuCategoryId[];
+  /** True when this branch shows a reduced menu (more items coming). */
+  limited?: boolean;
+}
+
+/**
+ * Per-branch menu registry (keyed by Location.id). Branches without an entry
+ * (e.g. Bohnice) are treated as "coming soon" by the /menu page.
+ *
+ * Karlín = full menu. Vršovice temporarily mirrors Karlín. Žižkov has its own
+ * confirmed dataset.
+ */
+export const BRANCH_MENUS: Record<string, BranchMenu> = {
+  karlin: { items: MENU_ITEMS, categories: MENU_CATEGORY_ORDER },
+  vrsovice: { items: MENU_ITEMS, categories: MENU_CATEGORY_ORDER },
+  zizkov: {
+    items: ZIZKOV_MENU_ITEMS,
+    categories: ZIZKOV_CATEGORY_ORDER,
+    limited: true,
+  },
+};
+
+export function getBranchMenu(branchId: string): BranchMenu | null {
+  return BRANCH_MENUS[branchId] ?? null;
+}

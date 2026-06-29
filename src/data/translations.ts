@@ -180,6 +180,7 @@ export const translations = {
     special: { cs: "Speciál", en: "Specials" },
     salad: { cs: "Salát", en: "Salad" },
     combo: { cs: "Menu kombinace", en: "Combo meals" },
+    "kebab-menu": { cs: "Kebab menu", en: "Kebab menu" },
     drinks: { cs: "Nápoje", en: "Drinks" },
     sides: { cs: "Doplňky", en: "Sides" },
     all: { cs: "Vše", en: "All" },
