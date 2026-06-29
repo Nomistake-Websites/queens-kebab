@@ -3,6 +3,7 @@ import "./globals.css";
 import { LanguageProvider } from "@/lib/language";
 import { CookieConsentProvider } from "@/lib/cookies";
 import { CookieConsent } from "@/components/CookieConsent";
+import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { buildRestaurantJsonLd } from "@/lib/jsonld";
 import { SITE_URL, BRAND } from "@/data/socials";
 
@@ -70,6 +71,7 @@ export default function RootLayout({
           <CookieConsentProvider>
             {children}
             <CookieConsent />
+            <GoogleAnalytics />
           </CookieConsentProvider>
         </LanguageProvider>
         <script

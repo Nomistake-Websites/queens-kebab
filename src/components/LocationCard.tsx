@@ -54,10 +54,11 @@ export function LocationCard({ location, index, selected = false, onToggle }: Pr
             alt=""
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"
-            className="object-cover opacity-50 transition-opacity duration-500 group-hover:opacity-65"
+            className="object-cover opacity-40 transition-opacity duration-500 group-hover:opacity-55"
           />
-          {/* Dark gradient keeps text readable while the photo stays visible */}
-          <div className="absolute inset-0 bg-gradient-to-t from-ink-950/92 via-ink-950/78 to-ink-950/55" />
+          {/* Strong dark gradient + flat scrim keep white text clearly readable */}
+          <div className="absolute inset-0 bg-ink-950/55" />
+          <div className="absolute inset-0 bg-gradient-to-t from-ink-950/95 via-ink-950/85 to-ink-950/70" />
         </div>
       )}
 
@@ -86,7 +87,7 @@ export function LocationCard({ location, index, selected = false, onToggle }: Pr
           <div className="flex items-start gap-3">
             <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brand-red" strokeWidth={1.75} />
             <div>
-              <dt className="text-[11px] uppercase tracking-wider text-white/40">
+              <dt className="text-[11px] uppercase tracking-wider text-white/55">
                 {t(translations.common.address)}
               </dt>
               <dd className="text-white/85">{location.address}</dd>
@@ -95,7 +96,7 @@ export function LocationCard({ location, index, selected = false, onToggle }: Pr
           <div className="flex items-start gap-3">
             <Clock className="mt-0.5 h-4 w-4 shrink-0 text-brand-red" strokeWidth={1.75} />
             <div>
-              <dt className="text-[11px] uppercase tracking-wider text-white/40">
+              <dt className="text-[11px] uppercase tracking-wider text-white/55">
                 {t(translations.common.openingHours)}
               </dt>
               <dd className="text-white/85">{t(location.openingHours)}</dd>
@@ -104,7 +105,7 @@ export function LocationCard({ location, index, selected = false, onToggle }: Pr
           <div className="flex items-start gap-3">
             <Phone className="mt-0.5 h-4 w-4 shrink-0 text-brand-red" strokeWidth={1.75} />
             <div>
-              <dt className="text-[11px] uppercase tracking-wider text-white/40">
+              <dt className="text-[11px] uppercase tracking-wider text-white/55">
                 {t(translations.common.phone)}
               </dt>
               <dd>
@@ -159,50 +160,6 @@ export function LocationCard({ location, index, selected = false, onToggle }: Pr
             </>
           )}
         </div>
-
-        {!coming &&
-          (location.delivery.wolt ||
-            location.delivery.bolt ||
-            location.delivery.foodora) && (
-            /*
-              Delivery pills — intentionally compact at every breakpoint.
-              Sizing comes entirely from the base `.chip` class
-              (px-3 py-1 text-xs). The larger CTA cards live in the
-              Order section, not here.
-            */
-            <div className="mt-4 flex flex-wrap gap-1.5">
-              {location.delivery.wolt && (
-                <a
-                  href={location.delivery.wolt}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="chip hover:border-white/25 hover:bg-white/10"
-                >
-                  Wolt
-                </a>
-              )}
-              {location.delivery.bolt && (
-                <a
-                  href={location.delivery.bolt}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="chip hover:border-white/25 hover:bg-white/10"
-                >
-                  Bolt Food
-                </a>
-              )}
-              {location.delivery.foodora && (
-                <a
-                  href={location.delivery.foodora}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="chip hover:border-white/25 hover:bg-white/10"
-                >
-                  Foodora
-                </a>
-              )}
-            </div>
-          )}
       </div>
 
       {/* Branch photo overlay — opens on click, click again to close */}

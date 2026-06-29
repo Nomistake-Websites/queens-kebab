@@ -55,7 +55,7 @@ export function WhyUs() {
               type="button"
               onClick={() => open(idx)}
               aria-label={t(item.title)}
-              className="group card relative flex min-w-[78%] shrink-0 snap-start flex-col gap-3 overflow-hidden p-6 text-left transition hover:-translate-y-1 hover:border-white/15 sm:min-w-[46%] lg:min-w-0 lg:shrink"
+              className="group card relative flex min-w-[84%] shrink-0 snap-start flex-col gap-3 overflow-hidden p-6 text-left transition hover:-translate-y-1 hover:border-white/15 sm:min-w-[46%] lg:min-w-0 lg:shrink"
             >
               {/* Background photo — visible but darkened so text stays readable */}
               {photo && (
@@ -78,7 +78,7 @@ export function WhyUs() {
                 <h3 className="h-display text-lg font-semibold text-white">
                   {t(item.title)}
                 </h3>
-                <p className="text-sm text-white/70">{t(item.body)}</p>
+                <p className="text-sm text-white/80 lg:text-white/70">{t(item.body)}</p>
               </div>
             </button>
           );
