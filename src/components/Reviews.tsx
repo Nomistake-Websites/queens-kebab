@@ -1,15 +1,30 @@
 "use client";
 
+import { useState } from "react";
 import { Star } from "lucide-react";
-import { REVIEWS, type Review } from "@/data/reviews";
+import { REVIEWS, GOOGLE_REVIEWS_URL, type Review } from "@/data/reviews";
 import { GOOGLE_RATING } from "@/data/locations";
 import { useLanguage } from "@/lib/language";
 import { GoogleIcon } from "./icons";
 
-function ReviewCard({ r }: { r: Review }) {
+/** Above this length the body is clamped and a Více/Méně toggle is shown. */
+const LONG_TEXT = 130;
+
+function ReviewCard({
+  r,
+  open,
+  onToggle,
+}: {
+  r: Review;
+  open: boolean;
+  onToggle: () => void;
+}) {
   const { t } = useLanguage();
+  const text = t(r.body);
+  const isLong = text.length > LONG_TEXT;
+
   return (
-    <article className="card mx-3 flex h-full w-[300px] shrink-0 flex-col gap-4 p-6 sm:w-[340px]">
+    <article className="card mx-3 flex min-h-[230px] w-[300px] shrink-0 flex-col gap-4 p-6 sm:w-[340px]">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-1">
           {Array.from({ length: r.rating }).map((_, i) => (
@@ -22,10 +37,51 @@ function ReviewCard({ r }: { r: Review }) {
         </div>
         <GoogleIcon className="h-[18px] w-[18px]" />
       </div>
-      <p className="text-sm leading-relaxed text-white/85">“{t(r.body)}”</p>
+
+      <div className="flex flex-1 flex-col">
+        <p
+          className={`text-sm leading-relaxed text-white/85 transition-all ${
+            open || !isLong ? "" : "line-clamp-3"
+          }`}
+        >
+          “{text}”
+        </p>
+        {isLong && (
+          <button
+            type="button"
+            onClick={onToggle}
+            className="mt-2 self-start text-xs font-semibold uppercase tracking-wider text-brand-red transition hover:text-brand-redSoft"
+            aria-expanded={open}
+          >
+            {open
+              ? t({ cs: "Méně", en: "Less" })
+              : t({ cs: "Více", en: "More" })}
+          </button>
+        )}
+      </div>
+
+      {r.aspects && (
+        <p className="text-[11px] text-white/45">
+          {[
+            r.aspects.food != null &&
+              `${t({ cs: "Jídlo", en: "Food" })}: ${r.aspects.food}/5`,
+            r.aspects.service != null &&
+              `${t({ cs: "Obsluha", en: "Service" })}: ${r.aspects.service}/5`,
+            r.aspects.atmosphere != null &&
+              `${t({ cs: "Atmosféra", en: "Atmosphere" })}: ${r.aspects.atmosphere}/5`,
+          ]
+            .filter(Boolean)
+            .join(" · ")}
+        </p>
+      )}
+
       <div className="mt-auto flex items-center justify-between border-t border-white/5 pt-4 text-xs text-white/55">
         <span className="font-semibold text-white/90">{r.author}</span>
-        {r.branch && <span>{t(r.branch)}</span>}
+        {r.branch && (
+          <span className="rounded-full bg-white/5 px-2.5 py-1 text-[11px] text-white/70">
+            {t(r.branch)}
+          </span>
+        )}
       </div>
     </article>
   );
@@ -33,6 +89,8 @@ function ReviewCard({ r }: { r: Review }) {
 
 export function Reviews() {
   const { t } = useLanguage();
+  // Track a single open card by its rendered index (only one open at a time).
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
   // Duplicate the array so the translateX(-50%) loop is seamless
   const loop = [...REVIEWS, ...REVIEWS, ...REVIEWS, ...REVIEWS];
 
@@ -68,19 +126,27 @@ export function Reviews() {
           </div>
         </div>
         <div className="hidden h-px w-full bg-white/10 sm:block" />
-        <p className="hidden max-w-xs text-right text-sm text-white/70 sm:block">
-          {t({
-            cs: "Průměr napříč všemi pobočkami.",
-            en: "Averaged across all branches.",
-          })}
-        </p>
+        <a
+          href={GOOGLE_REVIEWS_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn-ghost justify-self-start text-xs sm:justify-self-end"
+        >
+          <GoogleIcon className="h-4 w-4" />
+          {t({ cs: "Zobrazit recenze na Google", en: "See reviews on Google" })}
+        </a>
       </div>
 
       {/* Marquee */}
       <div className="marquee group relative mt-8 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
-        <div className="marquee-track flex w-max animate-marquee-slow group-hover:[animation-play-state:paused] motion-reduce:animate-none sm:animate-marquee">
+        <div className="marquee-track flex w-max items-start animate-marquee-slow group-hover:[animation-play-state:paused] motion-reduce:animate-none sm:animate-marquee">
           {loop.map((r, i) => (
-            <ReviewCard key={`${r.author}-${i}`} r={r} />
+            <ReviewCard
+              key={`${r.author}-${i}`}
+              r={r}
+              open={openIndex === i}
+              onToggle={() => setOpenIndex((cur) => (cur === i ? null : i))}
+            />
           ))}
         </div>
       </div>

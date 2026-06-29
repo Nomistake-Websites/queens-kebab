@@ -145,5 +145,5 @@ export const ACTIVE_LOCATIONS: Location[] = LOCATIONS.filter(
 
 export const GOOGLE_RATING = {
   score: 4.6,
-  reviews: 776,
+  reviews: 2600,
 };

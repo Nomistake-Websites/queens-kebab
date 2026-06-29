@@ -5,47 +5,111 @@ export interface Review {
   rating: number;
   body: TranslationLeaf;
   branch?: TranslationLeaf;
+  /** Optional per-aspect ratings shown on the card when present. */
+  aspects?: {
+    food?: number;
+    service?: number;
+    atmosphere?: number;
+  };
 }
 
 /**
- * Hand-picked sample reviews for the website.
- * Replace with real Google review excerpts when you have permission.
+ * Real Google reviews, grouped by branch.
+ * Review text is authentic, so it is shown verbatim in both languages
+ * (we don't machine-translate guest reviews).
  */
+const KARLIN: TranslationLeaf = { cs: "Karlín", en: "Karlín" };
+const ZIZKOV: TranslationLeaf = { cs: "Žižkov", en: "Žižkov" };
+const EDEN: TranslationLeaf = { cs: "Eden / Vršovice", en: "Eden / Vršovice" };
+
 export const REVIEWS: Review[] = [
+  // Karlín
   {
-    author: "Martin K.",
+    author: "Syed Sameed Abbas",
     rating: 5,
+    branch: KARLIN,
     body: {
-      cs: "Nejlepší kebab v Praze. Maso z grilu, poctivá porce a rychlá obsluha. Vracím se každý týden.",
-      en: "Best kebab in Prague. Properly grilled meat, generous portion and quick service. I come back every week.",
+      cs: "The food was amazing and hospitality is even more. Thank you we will visit again.",
+      en: "The food was amazing and hospitality is even more. Thank you we will visit again.",
     },
-    branch: { cs: "Žižkov", en: "Žižkov" },
+    aspects: { food: 5, service: 5, atmosphere: 5 },
   },
   {
-    author: "Petra S.",
+    author: "ali boumelit",
     rating: 5,
+    branch: KARLIN,
     body: {
-      cs: "Dürüm jako z Istanbulu. Krásně okořeněné, čerstvá zelenina a domácí omáčka.",
-      en: "Dürüm just like in Istanbul. Beautifully seasoned, fresh veggies and homemade sauce.",
+      cs: "Wonderful experience and the food is really delicious.",
+      en: "Wonderful experience and the food is really delicious.",
     },
-    branch: { cs: "Karlín", en: "Karlín" },
   },
   {
-    author: "David R.",
+    author: "Harun Kaçan",
     rating: 5,
+    branch: KARLIN,
     body: {
-      cs: "Mix grill talíř je naprostá pecka. Falafel je taky výborný, manželka byla nadšená.",
-      en: "The mix grill plate is unreal. Falafel is great too – my wife loved it.",
+      cs: "Jídlo bylo vynikající, děkuji personálu.",
+      en: "Jídlo bylo vynikající, děkuji personálu.",
     },
-    branch: { cs: "Vršovice", en: "Vršovice" },
+  },
+  // Žižkov
+  {
+    author: "Zeynepece Tali",
+    rating: 5,
+    branch: ZIZKOV,
+    body: {
+      cs: "Bylo to velmi chutné a syté, rozhodně doporučuji.",
+      en: "Bylo to velmi chutné a syté, rozhodně doporučuji.",
+    },
   },
   {
-    author: "Aneta H.",
+    author: "Patrick Hewlett",
     rating: 5,
+    branch: ZIZKOV,
     body: {
-      cs: "Konečně místo, kde mají vege opravdu chutné. Halloumi talíř doporučuji.",
-      en: "Finally a spot with seriously tasty veggie options. The halloumi plate is a must.",
+      cs: "Best kebab place in Prague !",
+      en: "Best kebab place in Prague !",
     },
-    branch: { cs: "Žižkov", en: "Žižkov" },
+  },
+  {
+    author: "Verča Votočková",
+    rating: 5,
+    branch: ZIZKOV,
+    body: {
+      cs: "Můj nejoblíbenější kebab v okolí. Skvěle ochucený, tak akorát pikantní a do boxu s hranolkama přijdou všechny možné toppingy jako grilovaná zelenina, kyselé okurky, občas sýr.",
+      en: "Můj nejoblíbenější kebab v okolí. Skvěle ochucený, tak akorát pikantní a do boxu s hranolkama přijdou všechny možné toppingy jako grilovaná zelenina, kyselé okurky, občas sýr.",
+    },
+  },
+  // Eden / Vršovice
+  {
+    author: "Adam Soustružník",
+    rating: 5,
+    branch: EDEN,
+    body: {
+      cs: "Výborný kebab, super obsluha a hezké posezení venku. 👍 doporučuju",
+      en: "Výborný kebab, super obsluha a hezké posezení venku. 👍 doporučuju",
+    },
+  },
+  {
+    author: "Melanie Müller",
+    rating: 5,
+    branch: EDEN,
+    body: {
+      cs: "Už dlouho jsem nejedl tak dobrý kebab. Děkuji!",
+      en: "Už dlouho jsem nejedl tak dobrý kebab. Děkuji!",
+    },
+  },
+  {
+    author: "Saruhan Sarılı",
+    rating: 5,
+    branch: EDEN,
+    body: {
+      cs: "Všechno bylo úžasné, děkuji za vaši snahu!",
+      en: "Všechno bylo úžasné, děkuji za vaši snahu!",
+    },
   },
 ];
+
+/** Public Google reviews link (shortened, opens a Google search). */
+export const GOOGLE_REVIEWS_URL =
+  "https://www.google.com/search?q=queens+kebab+reviews";

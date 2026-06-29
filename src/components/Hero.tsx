@@ -1,13 +1,46 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 import { Star } from "lucide-react";
 import { useLanguage } from "@/lib/language";
 import { translations } from "@/data/translations";
 import { GOOGLE_RATING } from "@/data/locations";
 
+const DESKTOP_VIDEO = "/video/video-loop-optimized.mp4";
+const MOBILE_VIDEO = "/video/video-loop-mobile-optimized.mp4";
+const FALLBACK_IMAGE = "/images_optimized/fallback.jpg";
+
 export function Hero() {
   const { t } = useLanguage();
+  const videoRef = useRef<HTMLVideoElement>(null);
+  // Default to the desktop source on both server and first client render to
+  // avoid a hydration mismatch; we narrow to the mobile clip after mount.
+  const [videoSrc, setVideoSrc] = useState(DESKTOP_VIDEO);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    const apply = () => setVideoSrc(mq.matches ? MOBILE_VIDEO : DESKTOP_VIDEO);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
+
+  // Reload + autoplay whenever the chosen source changes.
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.load();
+    v.play().catch(() => {});
+  }, [videoSrc]);
+
+  // Fallback in case `loop` doesn't fire on some browsers.
+  const handleEnded = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.currentTime = 0;
+    v.play().catch(() => {});
+  };
 
   return (
     <section
@@ -16,16 +49,26 @@ export function Hero() {
     >
       {/* Video background */}
       <video
+        ref={videoRef}
+        key={videoSrc}
         className="absolute inset-0 -z-10 h-full w-full object-cover opacity-70"
         autoPlay
         muted
         loop
         playsInline
-        preload="metadata"
-        poster="/images/hero-poster.jpg"
+        preload="auto"
+        poster={FALLBACK_IMAGE}
+        onEnded={handleEnded}
       >
-        <source src="/videos/queens-kebab-hero.mp4" type="video/mp4" />
+        <source src={videoSrc} type="video/mp4" />
       </video>
+
+      {/* Fallback image — shown if the video can't load/decode */}
+      <div
+        aria-hidden
+        className="absolute inset-0 -z-[15] bg-cover bg-center opacity-70"
+        style={{ backgroundImage: `url(${FALLBACK_IMAGE})` }}
+      />
 
       {/* Fallback / decorative gradient */}
       <div

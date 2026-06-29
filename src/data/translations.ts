@@ -91,8 +91,8 @@ export const translations = {
       eyebrow: { cs: "Recenze", en: "Reviews" },
       title: { cs: "Hosté nám věří", en: "Loved by our guests" },
       subtitle: {
-        cs: "4,6 hvězdy z více než 776 recenzí na Google.",
-        en: "4.6 stars from over 776 Google reviews.",
+        cs: "4,6 hvězdy z 2600+ recenzí na Google.",
+        en: "4.6 stars from 2600+ Google reviews.",
       },
     },
     contact: {
