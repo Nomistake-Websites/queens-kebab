@@ -54,12 +54,12 @@ export function LocationCard({ location, index, selected = false, onToggle }: Pr
             alt=""
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"
-            className="object-cover opacity-50 transition-opacity duration-500 group-hover:opacity-65"
+            className="object-cover opacity-45 transition-opacity duration-500 group-hover:opacity-60"
           />
-          {/* Dark gradient + lighter flat scrim keep white text readable while
-              letting a bit more of the branch photo show through */}
-          <div className="absolute inset-0 bg-ink-950/40" />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink-950/92 via-ink-950/80 to-ink-950/62" />
+          {/* Dark gradient + flat scrim keep white text readable while still
+              letting the branch photo show through (a touch darker than before) */}
+          <div className="absolute inset-0 bg-ink-950/48" />
+          <div className="absolute inset-0 bg-gradient-to-t from-ink-950/93 via-ink-950/82 to-ink-950/65" />
         </div>
       )}
 

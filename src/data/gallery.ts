@@ -5,11 +5,11 @@ export interface GalleryImage {
 
 const BASE = "/images_optimized/galerie";
 
-/** Files are gal0..gal26.jpg, except gal8 which is a .png. */
-const PNG_INDEXES = new Set<number>([8]);
+/** Files are gal0..gal26.jpg, except gal8 which is an optimized .webp. */
+const WEBP_INDEXES = new Set<number>([8]);
 
 function file(n: number): string {
-  return `${BASE}/gal${n}.${PNG_INDEXES.has(n) ? "png" : "jpg"}`;
+  return `${BASE}/gal${n}.${WEBP_INDEXES.has(n) ? "webp" : "jpg"}`;
 }
 
 const ALTS = [

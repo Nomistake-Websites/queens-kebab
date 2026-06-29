@@ -1,8 +1,15 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useState } from "react";
-import { Flame, Beef, MapPin, Leaf, type LucideIcon } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  Flame,
+  Beef,
+  MapPin,
+  Leaf,
+  MoveHorizontal,
+  type LucideIcon,
+} from "lucide-react";
 import { translations } from "@/data/translations";
 import { useLanguage } from "@/lib/language";
 import type { GalleryImage } from "@/data/gallery";
@@ -14,13 +21,48 @@ const ICONS: LucideIcon[] = [Flame, Beef, MapPin, Leaf];
 const FEATURE_PHOTOS: GalleryImage[] = [
   { src: "/images_optimized/fallback.jpg", alt: "Queen's Kebab – maso z grilu" },
   { src: "/images_optimized/galerie/gal0.jpg", alt: "Queen's Kebab – poctivé porce" },
-  { src: "/images_optimized/pobocka-vrsovice.png", alt: "Queen's Kebab – pobočka" },
+  { src: "/images_optimized/pobocka-vrsovice.webp", alt: "Queen's Kebab – pobočka" },
   { src: "/images_optimized/IMG_4249.jpg", alt: "Queen's Kebab – vegetariánské volby" },
 ];
 
 export function WhyUs() {
   const { t } = useLanguage();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const scrollerRef = useRef<HTMLDivElement | null>(null);
+  const peekedRef = useRef(false);
+
+  // One-time "peek" hint on mobile: when the carousel first enters view,
+  // nudge it right ~96px then glide back, so it's obvious it can be swiped.
+  // Desktop (grid) and reduced-motion users are skipped.
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el || peekedRef.current) return;
+    if (typeof window === "undefined" || !("IntersectionObserver" in window)) return;
+    if (window.matchMedia("(min-width: 1024px)").matches) return; // desktop grid
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (!entry?.isIntersecting || peekedRef.current) return;
+        peekedRef.current = true;
+        io.disconnect();
+        // Don't fight the user if they've already started scrolling.
+        if (el.scrollLeft > 4) return;
+        el.style.scrollSnapType = "none";
+        el.scrollTo({ left: 96, behavior: "smooth" });
+        window.setTimeout(() => {
+          el.scrollTo({ left: 0, behavior: "smooth" });
+          window.setTimeout(() => {
+            el.style.scrollSnapType = "";
+          }, 600);
+        }, 750);
+      },
+      { threshold: 0.4 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   const open = useCallback((i: number) => setOpenIndex(i), []);
   const close = useCallback(() => setOpenIndex(null), []);
@@ -45,7 +87,10 @@ export function WhyUs() {
         Mobile: horizontal swipe carousel with snap.
         Desktop (lg+): the original 4-column grid (unchanged layout).
       */}
-      <div className="hide-scrollbar -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0 lg:grid lg:grid-cols-4 lg:gap-4 lg:overflow-visible lg:pb-0">
+      <div
+        ref={scrollerRef}
+        className="hide-scrollbar -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0 lg:grid lg:grid-cols-4 lg:gap-4 lg:overflow-visible lg:pb-0"
+      >
         {translations.why.items.map((item, idx) => {
           const Icon = ICONS[idx];
           const photo = FEATURE_PHOTOS[idx];
@@ -84,6 +129,12 @@ export function WhyUs() {
           );
         })}
       </div>
+
+      {/* Mobile-only swipe hint */}
+      <p className="mt-4 flex items-center justify-center gap-2 text-xs font-medium text-white/45 lg:hidden">
+        <MoveHorizontal className="h-3.5 w-3.5" strokeWidth={2} />
+        {t({ cs: "Přejeďte prstem pro další", en: "Swipe for more" })}
+      </p>
 
       {openIndex !== null && (
         <Lightbox

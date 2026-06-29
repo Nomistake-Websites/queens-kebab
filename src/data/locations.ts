@@ -65,7 +65,7 @@ export const LOCATIONS: Location[] = [
         "https://www.foodora.cz/restaurant/dcvz/queens-kebab-and-turkish-foods-dcvz",
     },
     geo: { lat: 50.0937, lng: 14.4476 },
-    image: "/images_optimized/pobocka-karlin.png",
+    image: "/images_optimized/pobocka-karlin.webp",
   },
   {
     id: "vrsovice",
@@ -88,7 +88,7 @@ export const LOCATIONS: Location[] = [
       foodora: "https://www.foodora.cz/restaurant/ph6c/queens-kebab-oc-eden",
     },
     geo: { lat: 50.0686, lng: 14.4626 },
-    image: "/images_optimized/pobocka-vrsovice.png",
+    image: "/images_optimized/pobocka-vrsovice.webp",
   },
   {
     id: "zizkov",
@@ -112,7 +112,7 @@ export const LOCATIONS: Location[] = [
         "https://www.foodora.cz/restaurant/dcvz/queens-kebab-and-turkish-foods-dcvz",
     },
     geo: { lat: 50.0809, lng: 14.4488 },
-    image: "/images_optimized/pobocka-zizkov.jpg",
+    image: "/images_optimized/pobocka-zizkov.webp",
   },
   {
     id: "bohnice",
