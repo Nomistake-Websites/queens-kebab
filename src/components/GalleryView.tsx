@@ -76,7 +76,7 @@ export function GalleryView() {
     <section className="container-page py-16 sm:py-20 md:py-24">
       {/* Top back button */}
       <Link
-        href="/"
+        href="/#gallery"
         className="inline-flex items-center gap-2 text-sm font-medium text-white/70 transition hover:text-brand-red"
       >
         <ArrowLeft className="h-4 w-4" strokeWidth={2} />
@@ -113,7 +113,7 @@ export function GalleryView() {
 
       {/* Bottom back button */}
       <div className="mt-12 flex justify-center">
-        <Link href="/" className="btn-primary">
+        <Link href="/#gallery" className="btn-primary">
           <ArrowLeft className="h-4 w-4" strokeWidth={2} />
           {backLabel}
         </Link>
