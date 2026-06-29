@@ -6,7 +6,7 @@ import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { DishCard } from "./DishCard";
 import { MenuCategoryTabs } from "./MenuCategoryTabs";
 import {
-  MENU_CATEGORY_ORDER,
+  MENU_FILTER_ORDER,
   MENU_ITEMS,
   getBestsellers,
   type MenuCategoryId,
@@ -68,11 +68,24 @@ export function MenuPreview() {
 
   return (
     <div className="space-y-8">
-      <MenuCategoryTabs
-        categories={MENU_CATEGORY_ORDER}
-        active={category}
-        onSelect={setCategory}
-      />
+      {/* Top row: category tabs + a visible "full menu" button */}
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <MenuCategoryTabs
+          categories={MENU_FILTER_ORDER}
+          active={category}
+          onSelect={setCategory}
+        />
+        <Link
+          href="/menu"
+          className="btn-ghost group shrink-0 self-start lg:self-auto"
+        >
+          {t(translations.sections.menuPreview.viewFullMenu)}
+          <ArrowRight
+            className="ml-1 h-4 w-4 transition group-hover:translate-x-0.5"
+            strokeWidth={2}
+          />
+        </Link>
+      </div>
 
       {/* Carousel with edge fades + desktop arrows */}
       <div className="relative -mx-4 sm:mx-0">

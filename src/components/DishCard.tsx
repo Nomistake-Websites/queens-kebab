@@ -89,14 +89,14 @@ export function DishCard({ item, variant = "default", priority = false }: DishCa
 
       <div className={`flex flex-col gap-1.5 p-4 sm:p-5`}>
         <h3 className="text-base font-semibold text-white sm:text-lg">
+          {typeof item.number === "number" && (
+            <span className="mr-1.5 font-mono text-sm text-brand-red">
+              {item.number}.
+            </span>
+          )}
           {t(item.name)}
         </h3>
         <p className="line-clamp-2 text-sm text-white/65">{t(item.description)}</p>
-        {item.allergens && (
-          <p className="mt-2 text-[11px] uppercase tracking-wider text-white/40">
-            {t(translations.qr.allergens)}: {t(item.allergens)}
-          </p>
-        )}
       </div>
     </article>
   );
