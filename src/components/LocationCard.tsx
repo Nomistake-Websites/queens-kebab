@@ -54,12 +54,12 @@ export function LocationCard({ location, index, selected = false, onToggle }: Pr
             alt=""
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"
-            className="object-cover opacity-45 transition-opacity duration-500 group-hover:opacity-60"
+            className="object-cover opacity-30 transition-opacity duration-500 group-hover:opacity-45"
           />
-          {/* Dark gradient + flat scrim keep white text readable while still
-              letting the branch photo show through (a touch darker than before) */}
-          <div className="absolute inset-0 bg-ink-950/48" />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink-950/93 via-ink-950/82 to-ink-950/65" />
+          {/* Default state prioritizes readability: heavy dark scrim + a
+              strong gradient over the text area. Photo stays faintly visible. */}
+          <div className="absolute inset-0 bg-ink-950/68" />
+          <div className="absolute inset-0 bg-gradient-to-t from-ink-950/95 via-ink-950/90 to-ink-950/80" />
         </div>
       )}
 
@@ -183,7 +183,7 @@ export function LocationCard({ location, index, selected = false, onToggle }: Pr
           />
           <div
             aria-hidden
-            className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/10"
+            className="absolute inset-0 bg-gradient-to-t from-black/88 via-black/50 to-black/35"
           />
           <span
             aria-hidden

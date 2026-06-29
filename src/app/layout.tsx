@@ -10,22 +10,26 @@ import { SITE_URL, BRAND } from "@/data/socials";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Queen's Kebab Praha | Turecký kebab Žižkov, Karlín, Vršovice",
+    default:
+      "Queen's Kebab Praha | Turecký kebab Karlín, Vršovice, Žižkov a Bohnice",
     template: "%s | Queen's Kebab Praha",
   },
   description:
-    "Queen's Kebab & Grill House nabízí poctivý turecký kebab, grilované speciality, dürüm, pita kebab a box kebab na třech pobočkách v Praze.",
+    "Queen's Kebab & Grill House nabízí poctivý turecký kebab, grilované speciality, dürüm, pita kebab a box kebab ve čtyřech pobočkách v Praze – Karlín, Vršovice, Žižkov a Bohnice.",
   applicationName: BRAND.name,
   authors: [{ name: BRAND.name }],
   keywords: [
+    "queens kebab",
+    "queen's kebab",
     "kebab Praha",
-    "turecký kebab",
-    "Queen's Kebab",
+    "turecký kebab Praha",
+    "kebab Karlín",
+    "kebab Vršovice",
+    "kebab Žižkov",
+    "kebab Bohnice",
     "dürüm Praha",
-    "Žižkov kebab",
-    "Karlín kebab",
-    "Vršovice kebab",
-    "halal Praha",
+    "pita kebab Praha",
+    "box kebab Praha",
   ],
   alternates: { canonical: "/" },
   openGraph: {
@@ -34,16 +38,25 @@ export const metadata: Metadata = {
     alternateLocale: ["en_US"],
     url: SITE_URL,
     siteName: BRAND.name,
-    title: "Queen's Kebab Praha | Turecký kebab Žižkov, Karlín, Vršovice",
+    title:
+      "Queen's Kebab Praha | Turecký kebab Karlín, Vršovice, Žižkov a Bohnice",
     description:
-      "Poctivý turecký kebab, dürüm, box a grilované speciality na třech pobočkách v Praze.",
-    images: [{ url: "/images/og.jpg", width: 1200, height: 630, alt: BRAND.name }],
+      "Poctivý turecký kebab, dürüm, box a grilované speciality ve čtyřech pobočkách v Praze – Karlín, Vršovice, Žižkov a Bohnice.",
+    images: [
+      {
+        url: "/images_optimized/fallback.jpg",
+        width: 1920,
+        height: 1280,
+        alt: BRAND.name,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Queen's Kebab Praha",
-    description: "Turecký kebab, dürüm a grill v Praze.",
-    images: ["/images/og.jpg"],
+    title: "Queen's Kebab Praha | Turecký kebab v Praze",
+    description:
+      "Poctivý turecký kebab, dürüm, box a grill ve čtyřech pobočkách v Praze – Karlín, Vršovice, Žižkov a Bohnice.",
+    images: ["/images_optimized/fallback.jpg"],
   },
   icons: {
     icon: [

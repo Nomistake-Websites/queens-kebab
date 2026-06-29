@@ -6,7 +6,7 @@ export const SOCIALS = {
 /** Shared business contact email — reused across contact section + footer. */
 export const EMAIL = "queenskebab.cz@gmail.com";
 
-export const SITE_URL = "https://www.queenskebab.cz";
+export const SITE_URL = "https://queenskebab.cz";
 
 export const BRAND = {
   name: "Queen's Kebab & Grill House",
