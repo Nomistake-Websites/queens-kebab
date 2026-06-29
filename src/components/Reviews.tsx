@@ -95,7 +95,7 @@ export function Reviews() {
   const loop = [...REVIEWS, ...REVIEWS, ...REVIEWS, ...REVIEWS];
 
   return (
-    <div className="relative overflow-hidden rounded-3xl border border-brand-red/20 bg-gradient-to-br from-brand-red/25 via-brand-redDark/30 to-black/60 p-6 shadow-card sm:p-10">
+    <div className="relative overflow-hidden rounded-3xl border border-brand-red/20 bg-gradient-to-br from-brand-red/25 via-brand-redDark/30 to-black/60 px-3 py-6 shadow-card sm:p-10">
       <div
         aria-hidden
         className="pointer-events-none absolute -top-32 left-1/2 h-72 w-[80%] -translate-x-1/2 rounded-full bg-brand-red/40 blur-3xl"

@@ -8,9 +8,11 @@ import { LOCATIONS } from "@/data/locations";
 import { SOCIALS, SITE_URL, BRAND, EMAIL } from "@/data/socials";
 import { translations } from "@/data/translations";
 import { useLanguage } from "@/lib/language";
+import { useCookieConsent } from "@/lib/cookies";
 
 export function Footer() {
   const { t } = useLanguage();
+  const { open: openCookieSettings } = useCookieConsent();
   const year = new Date().getFullYear();
   return (
     <footer className="relative border-t border-white/5 bg-ink-950">
@@ -130,12 +132,21 @@ export function Footer() {
           <p>
             © {year} {BRAND.name}. {t(translations.footer.rights)}
           </p>
-          <p>
-            {t({
-              cs: "Vytvořeno s láskou v Praze.",
-              en: "Made with love in Prague.",
-            })}
-          </p>
+          <div className="flex items-center gap-4">
+            <button
+              type="button"
+              onClick={openCookieSettings}
+              className="text-white/45 transition hover:text-white"
+            >
+              {t({ cs: "Nastavení cookies", en: "Cookie settings" })}
+            </button>
+            <span>
+              {t({
+                cs: "Vytvořeno s láskou v Praze.",
+                en: "Made with love in Prague.",
+              })}
+            </span>
+          </div>
         </div>
       </div>
     </footer>

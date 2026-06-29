@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { LanguageProvider } from "@/lib/language";
+import { CookieConsentProvider } from "@/lib/cookies";
+import { CookieConsent } from "@/components/CookieConsent";
 import { buildRestaurantJsonLd } from "@/lib/jsonld";
 import { SITE_URL, BRAND } from "@/data/socials";
 
@@ -64,7 +66,12 @@ export default function RootLayout({
   return (
     <html lang="cs" className="scroll-smooth">
       <body className="min-h-screen bg-ink-950 text-white antialiased">
-        <LanguageProvider>{children}</LanguageProvider>
+        <LanguageProvider>
+          <CookieConsentProvider>
+            {children}
+            <CookieConsent />
+          </CookieConsentProvider>
+        </LanguageProvider>
         <script
           type="application/ld+json"
           // eslint-disable-next-line react/no-danger

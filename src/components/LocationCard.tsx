@@ -46,7 +46,7 @@ export function LocationCard({ location, index, selected = false, onToggle }: Pr
       } ${hasPhoto ? "cursor-pointer" : ""}`}
       aria-disabled={coming || undefined}
     >
-      {/* Subtle branch photo that reveals on hover (behind all content) */}
+      {/* Branch photo — visible by default (darkened), a touch brighter on hover */}
       {hasPhoto && location.image && (
         <div aria-hidden className="pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-2xl">
           <Image
@@ -54,10 +54,10 @@ export function LocationCard({ location, index, selected = false, onToggle }: Pr
             alt=""
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"
-            className="object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-45"
+            className="object-cover opacity-50 transition-opacity duration-500 group-hover:opacity-65"
           />
-          {/* Dark gradient keeps text readable even when the photo shows */}
-          <div className="absolute inset-0 bg-gradient-to-t from-ink-950/90 via-ink-950/70 to-ink-950/60" />
+          {/* Dark gradient keeps text readable while the photo stays visible */}
+          <div className="absolute inset-0 bg-gradient-to-t from-ink-950/92 via-ink-950/78 to-ink-950/55" />
         </div>
       )}
 

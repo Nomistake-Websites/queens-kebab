@@ -156,18 +156,13 @@ export function Lightbox({ images, index, onClose, onPrev, onNext }: LightboxPro
             draggable={false}
             onLoad={() => setLoaded(true)}
             onError={() => setFailed(true)}
-            className={`block h-auto max-h-[85vh] w-auto max-w-[92vw] rounded-2xl border border-brand-red/20 object-contain shadow-2xl transition-opacity duration-200 ${
+            className={`block h-auto max-h-[94vh] w-auto max-w-[98vw] rounded-2xl object-contain shadow-2xl transition-opacity duration-200 ${
               loaded ? "opacity-100" : "opacity-0"
             }`}
-            style={{ aspectRatio: "4 / 3" }}
           />
         ) : (
           <div className="fallback-food h-[60vh] w-[80vw] max-w-3xl rounded-2xl" />
         )}
-
-        <p className="absolute -bottom-10 left-0 right-0 text-center text-xs uppercase tracking-[0.25em] text-white/60">
-          {img.alt} · {index + 1} / {images.length}
-        </p>
       </div>
     </div>
   );

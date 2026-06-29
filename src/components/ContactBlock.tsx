@@ -23,10 +23,10 @@ export function ContactBlock() {
         <p className="eyebrow">{t(translations.common.email)}</p>
         <a
           href={`mailto:${EMAIL}`}
-          className="mt-2 flex items-center gap-2 break-all text-xl font-semibold text-white transition hover:text-brand-red sm:text-2xl"
+          className="mt-2 flex items-center gap-2 text-base font-semibold text-white transition hover:text-brand-red sm:text-lg lg:text-xl [overflow-wrap:anywhere]"
         >
           <Mail className="h-5 w-5 shrink-0 text-brand-red" strokeWidth={1.75} />
-          {EMAIL}
+          <span className="min-w-0">{EMAIL}</span>
         </a>
         <p className="mt-2 text-sm text-white/55">
           {t({
@@ -73,29 +73,28 @@ export function ContactBlock() {
               >
                 <p className="text-sm font-semibold text-white">{t(loc.name)}</p>
                 <p className="mt-0.5 text-sm text-white/65">{loc.address}</p>
+                {/* Phone is shown for every branch, including Bohnice. */}
+                <a
+                  href={`tel:${loc.phone}`}
+                  className="mt-2 inline-flex items-center gap-1.5 text-sm font-medium text-white/85 transition hover:text-brand-red"
+                >
+                  <Phone className="h-3.5 w-3.5 text-brand-red" strokeWidth={2} />
+                  {formatPhone(loc.phone)}
+                </a>
                 {coming ? (
                   <p className="mt-1 text-xs italic text-brand-cream/70">
                     ({t(translations.common.comingSoonInline)})
                   </p>
                 ) : (
-                  <>
-                    <a
-                      href={`tel:${loc.phone}`}
-                      className="mt-2 inline-flex items-center gap-1.5 text-sm font-medium text-white/85 transition hover:text-brand-red"
-                    >
-                      <Phone className="h-3.5 w-3.5 text-brand-red" strokeWidth={2} />
-                      {formatPhone(loc.phone)}
-                    </a>
-                    <a
-                      href={loc.directionsUrl}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      className="mt-2 flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-brand-red transition hover:text-brand-redSoft"
-                    >
-                      {t(translations.common.openMaps)}
-                      <ArrowUpRight className="h-3 w-3" strokeWidth={2} />
-                    </a>
-                  </>
+                  <a
+                    href={loc.directionsUrl}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="mt-2 flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-brand-red transition hover:text-brand-redSoft"
+                  >
+                    {t(translations.common.openMaps)}
+                    <ArrowUpRight className="h-3 w-3" strokeWidth={2} />
+                  </a>
                 )}
               </li>
             );
