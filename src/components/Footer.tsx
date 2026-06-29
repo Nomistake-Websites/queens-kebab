@@ -4,8 +4,8 @@ import Link from "next/link";
 import { Globe } from "lucide-react";
 import { Logo } from "./Logo";
 import { InstagramIcon, FacebookIcon } from "./icons";
-import { LOCATIONS, PRIMARY_PHONE_DISPLAY, PRIMARY_PHONE_TEL } from "@/data/locations";
-import { SOCIALS, SITE_URL, BRAND } from "@/data/socials";
+import { LOCATIONS } from "@/data/locations";
+import { SOCIALS, SITE_URL, BRAND, EMAIL } from "@/data/socials";
 import { translations } from "@/data/translations";
 import { useLanguage } from "@/lib/language";
 
@@ -21,8 +21,11 @@ export function Footer() {
             {t(translations.footer.tagline)}
           </p>
           <p className="mt-4 text-sm text-white/55">
-            <a href={`tel:${PRIMARY_PHONE_TEL}`} className="text-white hover:text-brand-red">
-              {PRIMARY_PHONE_DISPLAY}
+            <a
+              href={`mailto:${EMAIL}`}
+              className="break-all text-white hover:text-brand-red"
+            >
+              {EMAIL}
             </a>
           </p>
         </div>

@@ -1,22 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowRight, Phone, Navigation as NavIcon, Clock } from "lucide-react";
-import {
-  LOCATIONS,
-  PRIMARY_PHONE_DISPLAY,
-  PRIMARY_PHONE_TEL,
-  type Location,
-} from "@/data/locations";
+import { ArrowRight, Clock } from "lucide-react";
+import { LOCATIONS, type Location } from "@/data/locations";
 import { translations } from "@/data/translations";
 import { useLanguage } from "@/lib/language";
-
-/** Format an E.164-ish phone for display. */
-function formatPhone(raw: string): string {
-  const cleaned = raw.replace(/\s+/g, "");
-  const match = cleaned.match(/^(\+\d{1,3})(\d{3})(\d{3})(\d{3})$/);
-  return match ? `${match[1]} ${match[2]} ${match[3]} ${match[4]}` : raw;
-}
 
 const PLATFORMS = [
   {
@@ -47,7 +35,6 @@ export function OrderButtons() {
   const [active, setActive] = useState<Location>(initial);
 
   const activeIsComing = active.comingSoon === true;
-  const activePhone = active.phone;
 
   return (
     <div className="grid gap-8 lg:grid-cols-[1fr_1.2fr] lg:items-stretch">
@@ -94,86 +81,6 @@ export function OrderButtons() {
               </button>
             );
           })}
-        </div>
-
-        <div className="mt-2 flex flex-col gap-2 border-t border-white/5 pt-4">
-          {/* Call button — disabled when the active branch isn't open yet */}
-          {activeIsComing ? (
-            <span
-              aria-disabled="true"
-              className="action-stack-btn pointer-events-none opacity-50"
-            >
-              <span className="action-stack-icon">
-                <Phone className="h-5 w-5" strokeWidth={1.75} />
-              </span>
-              <span className="action-stack-text">
-                <span className="action-stack-label">
-                  {t(translations.order.call)}
-                </span>
-                <span className="action-stack-sub font-mono">
-                  {formatPhone(activePhone)}
-                </span>
-              </span>
-            </span>
-          ) : (
-            <a href={`tel:${activePhone}`} className="action-stack-btn">
-              <span className="action-stack-icon">
-                <Phone className="h-5 w-5" strokeWidth={1.75} />
-              </span>
-              <span className="action-stack-text">
-                <span className="action-stack-label">
-                  {t(translations.order.call)}
-                </span>
-                <span className="action-stack-sub font-mono">
-                  {activePhone === PRIMARY_PHONE_TEL
-                    ? PRIMARY_PHONE_DISPLAY
-                    : formatPhone(activePhone)}
-                </span>
-              </span>
-              <ArrowRight
-                className="ml-auto h-4 w-4 shrink-0 text-white/40"
-                strokeWidth={2}
-              />
-            </a>
-          )}
-
-          {activeIsComing ? (
-            <span
-              aria-disabled="true"
-              className="action-stack-btn pointer-events-none opacity-50"
-            >
-              <span className="action-stack-icon">
-                <NavIcon className="h-5 w-5" strokeWidth={1.75} />
-              </span>
-              <span className="action-stack-text">
-                <span className="action-stack-label">
-                  {t(translations.order.directions)}
-                </span>
-                <span className="action-stack-sub">{t(active.district)}</span>
-              </span>
-            </span>
-          ) : (
-            <a
-              href={active.directionsUrl}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="action-stack-btn"
-            >
-              <span className="action-stack-icon">
-                <NavIcon className="h-5 w-5" strokeWidth={1.75} />
-              </span>
-              <span className="action-stack-text">
-                <span className="action-stack-label">
-                  {t(translations.order.directions)}
-                </span>
-                <span className="action-stack-sub">{t(active.district)}</span>
-              </span>
-              <ArrowRight
-                className="ml-auto h-4 w-4 shrink-0 text-white/40"
-                strokeWidth={2}
-              />
-            </a>
-          )}
         </div>
       </div>
 

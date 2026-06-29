@@ -217,6 +217,7 @@ export const translations = {
   common: {
     openingHours: { cs: "Otevírací doba", en: "Opening hours" },
     phone: { cs: "Telefon", en: "Phone" },
+    email: { cs: "E-mail", en: "Email" },
     address: { cs: "Adresa", en: "Address" },
     everyDay: { cs: "Každý den", en: "Every day" },
     seeMenu: { cs: "Zobrazit menu", en: "View menu" },

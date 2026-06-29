@@ -3,6 +3,9 @@ export const SOCIALS = {
   facebook: "https://www.facebook.com/profile.php?id=100068021234616",
 };
 
+/** Shared business contact email — reused across contact section + footer. */
+export const EMAIL = "queenskebab.cz@gmail.com";
+
 export const SITE_URL = "https://www.queenskebab.cz";
 
 export const BRAND = {

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { MapPin, Clock, Phone, ArrowUpRight, ImageIcon, X } from "lucide-react";
+import { MapPin, Clock, Phone, ArrowUpRight, X } from "lucide-react";
 import type { Location } from "@/data/locations";
 import { translations } from "@/data/translations";
 import { useLanguage } from "@/lib/language";
@@ -39,16 +39,31 @@ export function LocationCard({ location, index, selected = false, onToggle }: Pr
   return (
     <article
       onClick={handleCardClick}
-      className={`card relative overflow-hidden p-6 transition sm:p-7 ${
+      className={`group card relative overflow-hidden p-6 transition sm:p-7 ${
         coming
           ? "border-white/10"
           : "hover:-translate-y-1 hover:border-white/15 hover:shadow-glow"
       } ${hasPhoto ? "cursor-pointer" : ""}`}
       aria-disabled={coming || undefined}
     >
+      {/* Subtle branch photo that reveals on hover (behind all content) */}
+      {hasPhoto && location.image && (
+        <div aria-hidden className="pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-2xl">
+          <Image
+            src={location.image}
+            alt=""
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"
+            className="object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-45"
+          />
+          {/* Dark gradient keeps text readable even when the photo shows */}
+          <div className="absolute inset-0 bg-gradient-to-t from-ink-950/90 via-ink-950/70 to-ink-950/60" />
+        </div>
+      )}
+
       {/* Visual content — dimmed and blurred when the branch is coming soon */}
       <div
-        className={`relative transition ${
+        className={`relative z-10 transition ${
           coming ? "pointer-events-none select-none opacity-40 blur-[1px] grayscale" : ""
         }`}
       >
@@ -142,17 +157,6 @@ export function LocationCard({ location, index, selected = false, onToggle }: Pr
                 {t(translations.common.callUs)}
               </a>
             </>
-          )}
-          {hasPhoto && (
-            <button
-              type="button"
-              onClick={onToggle}
-              className="btn-ghost text-xs"
-              aria-pressed={selected}
-            >
-              <ImageIcon className="h-3.5 w-3.5" strokeWidth={2} />
-              {t({ cs: "Zobrazit fotku", en: "Show photo" })}
-            </button>
           )}
         </div>
 
