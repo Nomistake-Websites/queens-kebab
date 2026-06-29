@@ -46,9 +46,15 @@ export const metadata: Metadata = {
     images: ["/images/og.jpg"],
   },
   icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    icon: [
+      { url: "/logo/favicon.ico", sizes: "any" },
+      { url: "/logo/favicon-16x16.png", type: "image/png", sizes: "16x16" },
+      { url: "/logo/favicon-32x32.png", type: "image/png", sizes: "32x32" },
+      { url: "/logo/favicon-48x48.png", type: "image/png", sizes: "48x48" },
+    ],
+    apple: "/logo/apple-touch-icon.png",
   },
+  manifest: "/site.webmanifest",
 };
 
 export const viewport: Viewport = {

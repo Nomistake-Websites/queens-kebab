@@ -123,18 +123,27 @@ export function Footer() {
       </div>
 
       <div className="border-t border-white/5">
-        <div className="container-page flex flex-col items-center justify-between gap-3 py-6 text-xs text-white/45 sm:flex-row">
-          <p>
-            © {year} {BRAND.name}. {t(translations.footer.rights)}
-          </p>
-          <div className="flex items-center gap-4">
+        <div className="container-page flex flex-col items-center gap-3 py-6 text-xs text-white/45">
+          {/* Links row — above the copyright */}
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-center">
             <button
               type="button"
               onClick={openCookieSettings}
-              className="text-white/45 transition hover:text-white"
+              className="transition hover:text-white"
             >
               {t({ cs: "Nastavení cookies", en: "Cookie settings" })}
             </button>
+            <span aria-hidden className="text-white/20">·</span>
+            <Link
+              href="/zasady-ochrany-osobnich-udaju"
+              className="transition hover:text-white"
+            >
+              {t({
+                cs: "Zásady ochrany osobních údajů",
+                en: "Privacy policy",
+              })}
+            </Link>
+            <span aria-hidden className="text-white/20">·</span>
             <span>
               {t({
                 cs: "Vytvořeno s láskou v Praze.",
@@ -142,6 +151,10 @@ export function Footer() {
               })}
             </span>
           </div>
+          {/* Copyright — below */}
+          <p className="text-center">
+            © {year} {BRAND.name}. {t(translations.footer.rights)}
+          </p>
         </div>
       </div>
     </footer>
