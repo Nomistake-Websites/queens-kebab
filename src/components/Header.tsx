@@ -245,13 +245,6 @@ export function Header() {
               </Link>
             );
           })}
-          <Link
-            href="/qr-menu"
-            onClick={() => setOpen(false)}
-            className="rounded-2xl px-4 py-3 text-base font-medium text-white/85 transition hover:bg-white/5"
-          >
-            {t(translations.nav.qrMenu)}
-          </Link>
           <div className="mt-4 flex items-center justify-between gap-3 border-t border-white/5 pt-4">
             <LanguageSwitcher />
             <Link

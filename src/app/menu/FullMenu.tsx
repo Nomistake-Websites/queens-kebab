@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, Search } from "lucide-react";
+import { ArrowLeft, Search } from "lucide-react";
 import { DishCard } from "@/components/DishCard";
 import { MenuCategoryTabs } from "@/components/MenuCategoryTabs";
 import {
@@ -154,13 +154,6 @@ export function FullMenu() {
             strokeWidth={2}
           />
           {t(translations.common.backToHome)}
-        </Link>
-        <Link
-          href="/qr-menu"
-          className="inline-flex items-center gap-1.5 text-sm text-white/55 transition hover:text-white"
-        >
-          {t(translations.nav.qrMenu)}
-          <ArrowRight className="h-3.5 w-3.5" strokeWidth={2} />
         </Link>
       </div>
     </section>

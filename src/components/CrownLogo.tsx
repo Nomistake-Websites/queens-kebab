@@ -26,8 +26,8 @@ interface CrownLogoProps {
  *  - `object-contain` preserves aspect ratio, never stretches or crops
  *
  * Single source of truth — used by `<Logo />` everywhere a logo mark
- * appears (desktop nav, mobile nav, menu page header, QR menu header,
- * footer, …). Swap the file at the path above and the mark updates
+ * appears (desktop nav, mobile nav, menu page header, footer, …).
+ * Swap the file at the path above and the mark updates
  * everywhere at once.
  */
 export function CrownLogo({

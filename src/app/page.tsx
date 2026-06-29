@@ -8,7 +8,6 @@ import { WhyUs } from "@/components/WhyUs";
 import { Gallery } from "@/components/Gallery";
 import { Reviews } from "@/components/Reviews";
 import { ContactBlock } from "@/components/ContactBlock";
-import { QRPromo } from "@/components/QRPromo";
 import { Footer } from "@/components/Footer";
 import { translations } from "@/data/translations";
 
@@ -77,10 +76,6 @@ export default function HomePage() {
         className="bg-ink-900/40"
       >
         <Reviews />
-      </Section>
-
-      <Section id="qr-info">
-        <QRPromo />
       </Section>
 
       <Section

@@ -43,11 +43,6 @@ export function Footer() {
               </Link>
             </li>
             <li>
-              <Link href="/qr-menu" className="hover:text-white">
-                {t(translations.nav.qrMenu)}
-              </Link>
-            </li>
-            <li>
               <Link href="/#locations" className="hover:text-white">
                 {t(translations.nav.locations)}
               </Link>

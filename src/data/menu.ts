@@ -37,7 +37,7 @@ export interface MenuItem {
 
 /**
  * Edit prices, names and descriptions here.
- * The QR menu and the /menu page both read from this file.
+ * The landing menu preview and the /menu page both read from this file.
  *
  * Image paths point to /public/images/food/*.webp
  */
@@ -213,7 +213,7 @@ export function getByCategory(
 
 /**
  * Unique list of food image URLs — used to warm the browser cache on
- * pages that display food (landing carousel, /menu, /qr-menu).
+ * pages that display food (landing carousel, /menu).
  * Imported by `useImagePreload(...)`.
  */
 export const FOOD_IMAGE_SRCS: string[] = Array.from(

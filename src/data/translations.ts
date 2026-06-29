@@ -10,7 +10,6 @@ export const translations = {
     gallery: { cs: "Galerie", en: "Gallery" },
     reviews: { cs: "Recenze", en: "Reviews" },
     contact: { cs: "Kontakt", en: "Contact" },
-    qrMenu: { cs: "QR Menu", en: "QR Menu" },
   },
   hero: {
     eyebrow: {
@@ -102,15 +101,6 @@ export const translations = {
         cs: "Rádi odpovíme. Volejte, pište nebo sledujte na sítích.",
         en: "We're happy to chat. Call, message or follow us online.",
       },
-    },
-    qrPromo: {
-      eyebrow: { cs: "QR Menu", en: "QR Menu" },
-      title: { cs: "Menu naskenuješ na pobočce", en: "Scan the menu at any branch" },
-      subtitle: {
-        cs: "Stačí naskenovat QR kód u vašeho stolu a otevře se rychlé mobilní menu v češtině i angličtině.",
-        en: "Just scan the QR code at your table and open a quick mobile menu in Czech and English.",
-      },
-      cta: { cs: "Otevřít QR menu", en: "Open QR menu" },
     },
   },
   why: {
