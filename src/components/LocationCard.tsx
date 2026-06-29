@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { MapPin, Clock, Phone, ArrowUpRight } from "lucide-react";
+import Image from "next/image";
+import { MapPin, Clock, Phone, ArrowUpRight, ImageIcon, X } from "lucide-react";
 import type { Location } from "@/data/locations";
 import { translations } from "@/data/translations";
 import { useLanguage } from "@/lib/language";
@@ -9,6 +10,10 @@ import { useLanguage } from "@/lib/language";
 interface Props {
   location: Location;
   index?: number;
+  /** Whether this card's photo overlay is currently open. */
+  selected?: boolean;
+  /** Toggle this card's photo overlay (parent enforces single-open). */
+  onToggle?: () => void;
 }
 
 /** Format an E.164-ish phone for display (e.g. +420774668988 → +420 774 668 988). */
@@ -18,17 +23,27 @@ function formatPhone(raw: string): string {
   return match ? `${match[1]} ${match[2]} ${match[3]} ${match[4]}` : raw;
 }
 
-export function LocationCard({ location, index }: Props) {
+export function LocationCard({ location, index, selected = false, onToggle }: Props) {
   const { t } = useLanguage();
   const coming = location.comingSoon === true;
+  const hasPhoto = !coming && Boolean(location.image);
+
+  // Clicking anywhere on the card toggles the photo — except on real
+  // links/buttons, which keep their own behavior (maps, call, delivery).
+  const handleCardClick = (e: React.MouseEvent) => {
+    if (!hasPhoto) return;
+    if ((e.target as HTMLElement).closest("a,button")) return;
+    onToggle?.();
+  };
 
   return (
     <article
+      onClick={handleCardClick}
       className={`card relative overflow-hidden p-6 transition sm:p-7 ${
         coming
           ? "border-white/10"
           : "hover:-translate-y-1 hover:border-white/15 hover:shadow-glow"
-      }`}
+      } ${hasPhoto ? "cursor-pointer" : ""}`}
       aria-disabled={coming || undefined}
     >
       {/* Visual content — dimmed and blurred when the branch is coming soon */}
@@ -128,6 +143,17 @@ export function LocationCard({ location, index }: Props) {
               </a>
             </>
           )}
+          {hasPhoto && (
+            <button
+              type="button"
+              onClick={onToggle}
+              className="btn-ghost text-xs"
+              aria-pressed={selected}
+            >
+              <ImageIcon className="h-3.5 w-3.5" strokeWidth={2} />
+              {t({ cs: "Zobrazit fotku", en: "Show photo" })}
+            </button>
+          )}
         </div>
 
         {!coming &&
@@ -174,6 +200,46 @@ export function LocationCard({ location, index }: Props) {
             </div>
           )}
       </div>
+
+      {/* Branch photo overlay — opens on click, click again to close */}
+      {hasPhoto && location.image && (
+        <button
+          type="button"
+          onClick={onToggle}
+          aria-label={t({ cs: "Skrýt fotku", en: "Hide photo" })}
+          aria-pressed={selected}
+          className={`absolute inset-0 z-20 block overflow-hidden rounded-2xl text-left transition-opacity duration-300 ${
+            selected ? "opacity-100" : "pointer-events-none opacity-0"
+          }`}
+        >
+          <Image
+            src={location.image}
+            alt={t(location.name)}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"
+            className="object-cover"
+          />
+          <div
+            aria-hidden
+            className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/10"
+          />
+          <span
+            aria-hidden
+            className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full border border-white/20 bg-black/50 text-white backdrop-blur"
+          >
+            <X className="h-4 w-4" strokeWidth={2} />
+          </span>
+          <div className="absolute inset-x-0 bottom-0 p-5">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-brand-red">
+              {typeof index === "number" ? `0${index + 1}` : "·"} ·{" "}
+              {t(location.district)}
+            </span>
+            <h3 className="mt-1 h-display text-xl font-semibold text-white drop-shadow sm:text-2xl">
+              {t(location.name)}
+            </h3>
+          </div>
+        </button>
+      )}
 
       {/* Coming-soon overlay */}
       {coming && (

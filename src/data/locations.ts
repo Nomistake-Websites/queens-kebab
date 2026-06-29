@@ -25,6 +25,8 @@ export interface Location {
   };
   /** Coordinates for JSON-LD (optional, edit to exact values). */
   geo?: { lat: number; lng: number };
+  /** Branch photo shown on click in the locations section (optional). */
+  image?: string;
   /**
    * When true, the branch is shown as "coming soon":
    *  - LocationCard renders an overlay with a PŘIPRAVUJEME / COMING SOON badge
@@ -40,29 +42,6 @@ const PHONE = "+420799022871";
 const BOHNICE_PHONE = "+420774668988";
 
 export const LOCATIONS: Location[] = [
-  {
-    id: "zizkov",
-    name: { cs: "Queen's Kebab Žižkov", en: "Queen's Kebab Žižkov" },
-    address: "Seifertova 33, 130 00 Praha 3",
-    district: { cs: "Žižkov", en: "Žižkov" },
-    phone: PHONE,
-    openingHours: {
-      cs: "Po–Ne 10:00 – 02:00",
-      en: "Mon–Sun 10:00 – 02:00",
-    },
-    directionsUrl:
-      "https://www.google.com/maps/dir/?api=1&destination=Queen%27s+Kebab+Seifertova+33+Praha+3",
-    reviewUrl:
-      "https://search.google.com/local/writereview?placeid=REPLACE_WITH_PLACE_ID_ZIZKOV",
-    delivery: {
-      wolt:
-        "https://wolt.com/en/cze/prague/restaurant/queens-kebab-seifertova?srsltid=AfmBOooPXb-ZAZ8X6UPQhbdc_qusSzYUCkLpUMYjI05E1gG6gVXXYf5L",
-      bolt: "https://food.bolt.eu/en/271-prague/p/6650-queens-kebab-seifertova/",
-      foodora:
-        "https://www.foodora.cz/restaurant/dcvz/queens-kebab-and-turkish-foods-dcvz",
-    },
-    geo: { lat: 50.0809, lng: 14.4488 },
-  },
   {
     id: "karlin",
     name: { cs: "Queen's Kebab Karlín", en: "Queen's Kebab Karlín" },
@@ -86,6 +65,7 @@ export const LOCATIONS: Location[] = [
         "https://www.foodora.cz/restaurant/dcvz/queens-kebab-and-turkish-foods-dcvz",
     },
     geo: { lat: 50.0937, lng: 14.4476 },
+    image: "/images_optimized/pobocka-karlin.png",
   },
   {
     id: "vrsovice",
@@ -108,6 +88,31 @@ export const LOCATIONS: Location[] = [
       foodora: "https://www.foodora.cz/restaurant/ph6c/queens-kebab-oc-eden",
     },
     geo: { lat: 50.0686, lng: 14.4626 },
+    image: "/images_optimized/pobocka-vrsovice.png",
+  },
+  {
+    id: "zizkov",
+    name: { cs: "Queen's Kebab Žižkov", en: "Queen's Kebab Žižkov" },
+    address: "Seifertova 33, 130 00 Praha 3",
+    district: { cs: "Žižkov", en: "Žižkov" },
+    phone: PHONE,
+    openingHours: {
+      cs: "Po–Ne 10:00 – 02:00",
+      en: "Mon–Sun 10:00 – 02:00",
+    },
+    directionsUrl:
+      "https://www.google.com/maps/dir/?api=1&destination=Queen%27s+Kebab+Seifertova+33+Praha+3",
+    reviewUrl:
+      "https://search.google.com/local/writereview?placeid=REPLACE_WITH_PLACE_ID_ZIZKOV",
+    delivery: {
+      wolt:
+        "https://wolt.com/en/cze/prague/restaurant/queens-kebab-seifertova?srsltid=AfmBOooPXb-ZAZ8X6UPQhbdc_qusSzYUCkLpUMYjI05E1gG6gVXXYf5L",
+      bolt: "https://food.bolt.eu/en/271-prague/p/6650-queens-kebab-seifertova/",
+      foodora:
+        "https://www.foodora.cz/restaurant/dcvz/queens-kebab-and-turkish-foods-dcvz",
+    },
+    geo: { lat: 50.0809, lng: 14.4488 },
+    image: "/images_optimized/pobocka-zizkov.jpg",
   },
   {
     id: "bohnice",

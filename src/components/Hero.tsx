@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Star } from "lucide-react";
 import { useLanguage } from "@/lib/language";
@@ -17,6 +18,8 @@ export function Hero() {
   // Default to the desktop source on both server and first client render to
   // avoid a hydration mismatch; we narrow to the mobile clip after mount.
   const [videoSrc, setVideoSrc] = useState(DESKTOP_VIDEO);
+  // Fallback image stays visible until the video can actually play.
+  const [isVideoReady, setIsVideoReady] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 767px)");
@@ -26,13 +29,17 @@ export function Hero() {
     return () => mq.removeEventListener("change", apply);
   }, []);
 
-  // Reload + autoplay whenever the chosen source changes.
+  // Reload + autoplay whenever the chosen source changes; reset readiness so
+  // the fallback covers the swap until the new source can play.
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
+    setIsVideoReady(false);
     v.load();
     v.play().catch(() => {});
   }, [videoSrc]);
+
+  const markReady = () => setIsVideoReady(true);
 
   // Fallback in case `loop` doesn't fire on some browsers.
   const handleEnded = () => {
@@ -47,28 +54,43 @@ export function Hero() {
       id="hero"
       className="relative isolate flex min-h-[100svh] w-full items-center overflow-hidden bg-ink-950 grain-overlay"
     >
-      {/* Video background */}
+      {/* Video background — fades in once it can play */}
       <video
         ref={videoRef}
-        key={videoSrc}
-        className="absolute inset-0 -z-10 h-full w-full object-cover opacity-70"
+        className={`absolute inset-0 -z-10 h-full w-full object-cover transition-opacity duration-500 ${
+          isVideoReady ? "opacity-70" : "opacity-0"
+        }`}
         autoPlay
         muted
         loop
         playsInline
         preload="auto"
         poster={FALLBACK_IMAGE}
+        onLoadedData={markReady}
+        onCanPlay={markReady}
+        onPlaying={markReady}
         onEnded={handleEnded}
       >
         <source src={videoSrc} type="video/mp4" />
       </video>
 
-      {/* Fallback image — shown if the video can't load/decode */}
+      {/* Fallback image — optimized via next/image, fades out once video plays.
+          Sits behind the video (-z-15) so it can never cover a playing clip. */}
       <div
         aria-hidden
-        className="absolute inset-0 -z-[15] bg-cover bg-center opacity-70"
-        style={{ backgroundImage: `url(${FALLBACK_IMAGE})` }}
-      />
+        className={`absolute inset-0 -z-[15] transition-opacity duration-500 ${
+          isVideoReady ? "opacity-0" : "opacity-70"
+        }`}
+      >
+        <Image
+          src={FALLBACK_IMAGE}
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+        />
+      </div>
 
       {/* Fallback / decorative gradient */}
       <div
@@ -144,7 +166,7 @@ export function Hero() {
               </span>
             </div>
             <span className="hidden h-4 w-px bg-white/15 sm:block" />
-            <span className="text-white/70">Žižkov · Karlín · Vršovice</span>
+            <span className="text-white/70">Karlín · Vršovice · Žižkov · Bohnice</span>
           </div>
         </div>
       </div>

@@ -27,9 +27,9 @@ export const translations = {
     },
     subtitle: {
       cs:
-        "Čerstvé maso z grilu, výrazná chuť, poctivé porce a tři pobočky v Praze – Žižkov, Karlín a Vršovice.",
+        "Čerstvé maso z grilu, výrazná chuť, poctivé porce a čtyři pobočky v Praze – Karlín, Vršovice, Žižkov a Bohnice.",
       en:
-        "Fresh grilled meat, bold flavour, generous portions and three branches in Prague – Žižkov, Karlín and Vršovice.",
+        "Fresh grilled meat, bold flavour, generous portions and four branches in Prague – Karlín, Vršovice, Žižkov and Bohnice.",
     },
     ctaMenu: { cs: "Zobrazit menu", en: "View menu" },
     ctaLocations: { cs: "Najít pobočku", en: "Find location" },
@@ -132,8 +132,8 @@ export const translations = {
       {
         title: { cs: "Čtyři místa v Praze", en: "Four spots in Prague" },
         body: {
-          cs: "Žižkov, Karlín, Vršovice a brzy také Bohnice. Otevřeno každý den.",
-          en: "Žižkov, Karlín, Vršovice and Bohnice coming soon. Open every day.",
+          cs: "Karlín, Vršovice, Žižkov a brzy také Bohnice. Otevřeno každý den.",
+          en: "Karlín, Vršovice, Žižkov and Bohnice coming soon. Open every day.",
         },
       },
       {

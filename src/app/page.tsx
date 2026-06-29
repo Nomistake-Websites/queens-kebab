@@ -2,7 +2,7 @@ import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { Section } from "@/components/Section";
 import { MenuPreview } from "@/components/MenuPreview";
-import { LocationCard } from "@/components/LocationCard";
+import { LocationsGrid } from "@/components/LocationsGrid";
 import { OrderButtons } from "@/components/OrderButtons";
 import { WhyUs } from "@/components/WhyUs";
 import { Gallery } from "@/components/Gallery";
@@ -10,7 +10,6 @@ import { Reviews } from "@/components/Reviews";
 import { ContactBlock } from "@/components/ContactBlock";
 import { QRPromo } from "@/components/QRPromo";
 import { Footer } from "@/components/Footer";
-import { LOCATIONS } from "@/data/locations";
 import { translations } from "@/data/translations";
 
 export default function HomePage() {
@@ -38,12 +37,7 @@ export default function HomePage() {
         className="bg-ink-900/40"
         decorated="city"
       >
-        {/* 1 / 2 / 2 / 4 columns — scales gracefully now that we have 4 branches. */}
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-          {LOCATIONS.map((loc, i) => (
-            <LocationCard key={loc.id} location={loc} index={i} />
-          ))}
-        </div>
+        <LocationsGrid />
       </Section>
 
       <Section
