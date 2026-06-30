@@ -120,10 +120,8 @@ export const MENU_ITEMS: MenuItem[] = [
 
   // 12. Nápoje
   { id: "ka-ayran", category: "drinks", name: { cs: "Ayran", en: "Ayran" }, description: { cs: "Jogurtový turecký nápoj", en: "Turkish yogurt drink" }, price: "39 Kč", image: IMG("ayran.webp"), tags: ["drink"] },
-  { id: "ka-cola-male", category: "drinks", name: { cs: "Cola malé", en: "Cola small" }, description: { cs: "Coca-Cola", en: "Coca-Cola" }, price: "39 Kč", image: IMG("soft-drink-cola.webp"), tags: ["drink"] },
-  { id: "ka-cola-velke", category: "drinks", name: { cs: "Cola velké", en: "Cola large" }, description: { cs: "Coca-Cola", en: "Coca-Cola" }, price: "49 Kč", image: IMG("soft-drink-cola.webp"), tags: ["drink"] },
-  { id: "ka-fanta-male", category: "drinks", name: { cs: "Fanta malé", en: "Fanta small" }, description: { cs: "Fanta Orange", en: "Fanta Orange" }, price: "39 Kč", image: IMG("fanta.webp"), tags: ["drink"] },
-  { id: "ka-fanta-velke", category: "drinks", name: { cs: "Fanta velké", en: "Fanta large" }, description: { cs: "Fanta Orange", en: "Fanta Orange" }, price: "49 Kč", image: IMG("fanta.webp"), tags: ["drink"] },
+  { id: "ka-cola", category: "drinks", name: { cs: "Cola", en: "Cola" }, description: { cs: "Coca-Cola", en: "Coca-Cola" }, price: "od 39 Kč", image: IMG("soft-drink-cola.webp"), tags: ["drink"] },
+  { id: "ka-fanta", category: "drinks", name: { cs: "Fanta", en: "Fanta" }, description: { cs: "Fanta Orange", en: "Fanta Orange" }, price: "od 39 Kč", image: IMG("fanta.webp"), tags: ["drink"] },
   { id: "ka-pivo", category: "drinks", name: { cs: "Pivo", en: "Beer" }, description: { cs: "Pivo", en: "Beer" }, price: "55 Kč", image: IMG("beer.webp"), tags: ["drink"] },
 
   // 13. Doplňky
@@ -195,6 +193,10 @@ export const ZIZKOV_MENU_ITEMS: MenuItem[] = [
   { id: "zz-doner-cola-hr", number: 26, category: "kebab-menu", name: { cs: "Döner kebab + Cola 330 ml + hranolky", en: "Döner kebab + Cola 330 ml + fries" }, description: { cs: "Döner kebab s nápojem a hranolkami", en: "Döner kebab with a drink and fries" }, price: "245 Kč", image: IMG("doner-kebab-combo-meal-with-fries-cola.webp") },
   { id: "zz-durum-cola", number: 27, category: "kebab-menu", name: { cs: "Dürüm kebab + Cola 330 ml", en: "Dürüm kebab + Cola 330 ml" }, description: { cs: "Dürüm kebab s nápojem", en: "Dürüm kebab with a drink" }, price: "195 Kč", image: IMG("durum-kebab-combo-cola.webp") },
   { id: "zz-durum-cola-hr", number: 28, category: "kebab-menu", name: { cs: "Dürüm kebab + Cola 330 ml + hranolky", en: "Dürüm kebab + Cola 330 ml + fries" }, description: { cs: "Dürüm kebab s nápojem a hranolkami", en: "Dürüm kebab with a drink and fries" }, price: "245 Kč", image: IMG("durum-kebab-combo-with-fries-cola.webp") },
+
+  // Nápoje
+  { id: "zz-cola", category: "drinks", name: { cs: "Cola", en: "Cola" }, description: { cs: "Coca-Cola", en: "Coca-Cola" }, price: "od 39 Kč", image: IMG("soft-drink-cola.webp"), tags: ["drink"] },
+  { id: "zz-fanta", category: "drinks", name: { cs: "Fanta", en: "Fanta" }, description: { cs: "Fanta Orange", en: "Fanta Orange" }, price: "od 39 Kč", image: IMG("fanta.webp"), tags: ["drink"] },
 ];
 
 export const ZIZKOV_CATEGORY_ORDER: MenuCategoryId[] = [
@@ -204,6 +206,7 @@ export const ZIZKOV_CATEGORY_ORDER: MenuCategoryId[] = [
   "vegetarian",
   "box",
   "kebab-menu",
+  "drinks",
 ];
 
 // ───────────────────────────────────────────────────────────────────────────
@@ -262,10 +265,8 @@ export const VRSOVICE_MENU_ITEMS: MenuItem[] = [
 
   // Nápoje
   { id: "vr-ayran", category: "drinks", name: { cs: "Ayran", en: "Ayran" }, description: { cs: "Jogurtový turecký nápoj", en: "Turkish yogurt drink" }, price: "35 Kč", image: IMG("ayran.webp"), tags: ["drink"] },
-  { id: "vr-cola-male", category: "drinks", name: { cs: "Cola malé", en: "Cola small" }, description: { cs: "Coca-Cola", en: "Coca-Cola" }, price: "35 Kč", image: IMG("soft-drink-cola.webp"), tags: ["drink"] },
-  { id: "vr-cola-velke", category: "drinks", name: { cs: "Cola velké", en: "Cola large" }, description: { cs: "Coca-Cola", en: "Coca-Cola" }, price: "45 Kč", image: IMG("soft-drink-cola.webp"), tags: ["drink"] },
-  { id: "vr-fanta-male", category: "drinks", name: { cs: "Fanta malé", en: "Fanta small" }, description: { cs: "Fanta Orange", en: "Fanta Orange" }, price: "35 Kč", image: IMG("fanta.webp"), tags: ["drink"] },
-  { id: "vr-fanta-velke", category: "drinks", name: { cs: "Fanta velké", en: "Fanta large" }, description: { cs: "Fanta Orange", en: "Fanta Orange" }, price: "45 Kč", image: IMG("fanta.webp"), tags: ["drink"] },
+  { id: "vr-cola", category: "drinks", name: { cs: "Cola", en: "Cola" }, description: { cs: "Coca-Cola", en: "Coca-Cola" }, price: "od 35 Kč", image: IMG("soft-drink-cola.webp"), tags: ["drink"] },
+  { id: "vr-fanta", category: "drinks", name: { cs: "Fanta", en: "Fanta" }, description: { cs: "Fanta Orange", en: "Fanta Orange" }, price: "od 35 Kč", image: IMG("fanta.webp"), tags: ["drink"] },
   { id: "vr-pivo", category: "drinks", name: { cs: "Pivo", en: "Beer" }, description: { cs: "Pivo", en: "Beer" }, price: "50 Kč", image: IMG("beer.webp"), tags: ["drink"] },
 
   // Doplňky

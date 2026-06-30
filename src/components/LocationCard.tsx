@@ -57,10 +57,10 @@ export function LocationCard({ location, index, selected = false, onToggle }: Pr
             className="object-cover opacity-35 transition-opacity duration-500 group-hover:opacity-50"
           />
           {/* Default state prioritizes readability: dark scrim + a strong
-              gradient over the text area. Photo is ~5% more visible than before
-              while text stays clearly readable. */}
-          <div className="absolute inset-0 bg-ink-950/62" />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink-950/93 via-ink-950/87 to-ink-950/76" />
+              gradient over the text area. Nudged ~2% darker for readability
+              while the photo stays visible. */}
+          <div className="absolute inset-0 bg-ink-950/64" />
+          <div className="absolute inset-0 bg-gradient-to-t from-ink-950/94 via-ink-950/89 to-ink-950/78" />
         </div>
       )}
 

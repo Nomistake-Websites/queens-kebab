@@ -88,17 +88,19 @@ export function Lightbox({ images, index, onClose, onPrev, onNext }: LightboxPro
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
-      {/* Close */}
+      {/* Close — fixed to the viewport so it stays clearly visible above the
+          image on mobile and desktop, with a safe-area-aware top offset. */}
       <button
         type="button"
         onClick={(e) => {
           e.stopPropagation();
           onClose();
         }}
-        aria-label="Close"
-        className="absolute right-3 top-3 z-30 grid h-11 w-11 place-items-center rounded-full border border-white/20 bg-black/60 text-white backdrop-blur-md transition hover:bg-white/15 sm:right-6 sm:top-6"
+        aria-label="Zavřít"
+        style={{ top: "calc(env(safe-area-inset-top) + 16px)", right: "16px" }}
+        className="fixed z-[120] grid h-12 w-12 place-items-center rounded-full border border-white/25 bg-black/65 text-white shadow-lg backdrop-blur-md transition hover:border-white/40 hover:bg-black/80 active:scale-95"
       >
-        <X className="h-5 w-5" strokeWidth={2} />
+        <X className="h-6 w-6" strokeWidth={2.25} />
       </button>
 
       {/* Prev */}
