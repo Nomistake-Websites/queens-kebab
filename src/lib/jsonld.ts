@@ -45,8 +45,8 @@ export function buildRestaurantJsonLd() {
                   "Saturday",
                   "Sunday",
                 ],
-                opens: "10:00",
-                closes: "02:00",
+                opens: loc.hours?.opens ?? "10:00",
+                closes: loc.hours?.closes ?? "02:00",
               },
             ],
             aggregateRating: {

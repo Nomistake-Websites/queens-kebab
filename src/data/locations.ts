@@ -8,6 +8,12 @@ export interface Location {
   phone: string;
   /** Opening hours placeholder – edit easily later. */
   openingHours: TranslationLeaf;
+  /**
+   * Machine-readable opening hours for JSON-LD (24h "HH:MM"). Optional —
+   * when omitted, structured data falls back to the default 10:00–02:00.
+   * Set per-branch when a branch's hours differ (e.g. Žižkov 10:00–06:00).
+   */
+  hours?: { opens: string; closes: string };
   /** Google Maps directions URL (replace with the exact place URL later). */
   directionsUrl: string;
   /** Google review URL placeholder – replace with the exact "write review" link per branch. */
@@ -97,9 +103,10 @@ export const LOCATIONS: Location[] = [
     district: { cs: "Žižkov", en: "Žižkov" },
     phone: PHONE,
     openingHours: {
-      cs: "Po–Ne 10:00 – 02:00",
-      en: "Mon–Sun 10:00 – 02:00",
+      cs: "Po–Ne 10:00–06:00",
+      en: "Mon–Sun 10:00–06:00",
     },
+    hours: { opens: "10:00", closes: "06:00" },
     directionsUrl:
       "https://www.google.com/maps/dir/?api=1&destination=Queen%27s+Kebab+Seifertova+33+Praha+3",
     reviewUrl:
