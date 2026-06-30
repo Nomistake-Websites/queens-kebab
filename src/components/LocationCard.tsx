@@ -54,12 +54,13 @@ export function LocationCard({ location, index, selected = false, onToggle }: Pr
             alt=""
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"
-            className="object-cover opacity-30 transition-opacity duration-500 group-hover:opacity-45"
+            className="object-cover opacity-35 transition-opacity duration-500 group-hover:opacity-50"
           />
-          {/* Default state prioritizes readability: heavy dark scrim + a
-              strong gradient over the text area. Photo stays faintly visible. */}
-          <div className="absolute inset-0 bg-ink-950/68" />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink-950/95 via-ink-950/90 to-ink-950/80" />
+          {/* Default state prioritizes readability: dark scrim + a strong
+              gradient over the text area. Photo is ~5% more visible than before
+              while text stays clearly readable. */}
+          <div className="absolute inset-0 bg-ink-950/62" />
+          <div className="absolute inset-0 bg-gradient-to-t from-ink-950/93 via-ink-950/87 to-ink-950/76" />
         </div>
       )}
 

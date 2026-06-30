@@ -1,16 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ArrowLeft, ArrowRight, Clock, Search } from "lucide-react";
 import { DishCard } from "@/components/DishCard";
+import { Lightbox } from "@/components/Lightbox";
 import {
   MENU_CATEGORY_ORDER,
   MENU_ITEMS,
@@ -22,19 +16,19 @@ import {
 import { LOCATIONS, type Location } from "@/data/locations";
 import { translations } from "@/data/translations";
 import { useLanguage } from "@/lib/language";
+import { useMenuLightbox } from "@/hooks/useMenuLightbox";
 
 const sectionId = (cat: MenuCategoryId) => `cat-${cat}`;
 
+/** Both "back" buttons return to the landing page menu section. */
+const BACK_HREF = "/#menu";
+
 export function FullMenu() {
   const { t, lang } = useLanguage();
-  const router = useRouter();
-  const searchParams = useSearchParams();
 
-  const activeLocations = LOCATIONS;
-  const firstActive = activeLocations.find((l) => !l.comingSoon) ?? LOCATIONS[0];
+  const firstActive = LOCATIONS.find((l) => !l.comingSoon) ?? LOCATIONS[0];
   const [branch, setBranch] = useState<Location>(firstActive);
   const [query, setQuery] = useState("");
-  const hasHistoryRef = useRef(false);
   const branchComing = branch.comingSoon === true;
 
   // Menu for the selected branch (falls back to the full Karlín menu).
@@ -57,38 +51,6 @@ export function FullMenu() {
     setActiveCat(branchCategories[0]);
   }, [branchCategories]);
 
-  useEffect(() => {
-    hasHistoryRef.current = window.history.length > 1;
-  }, []);
-
-  const fallbackHref = useMemo(() => {
-    const returnTo = searchParams.get("returnTo");
-    if (returnTo) {
-      try {
-        return decodeURIComponent(returnTo);
-      } catch {
-        return "/#menu";
-      }
-    }
-    const from = searchParams.get("from");
-    if (from) return `/#${from}`;
-    return "/";
-  }, [searchParams]);
-
-  const handleBack = useCallback(
-    (e: React.MouseEvent<HTMLAnchorElement>) => {
-      if (
-        hasHistoryRef.current &&
-        document.referrer &&
-        document.referrer.includes(window.location.host)
-      ) {
-        e.preventDefault();
-        router.back();
-      }
-    },
-    [router],
-  );
-
   const q = query.trim().toLowerCase();
   const searching = q.length > 0;
 
@@ -100,6 +62,10 @@ export function FullMenu() {
         i.description[lang].toLowerCase().includes(q),
     );
   }, [searching, q, lang, branchMenu.items]);
+
+  // Lightbox over the currently displayed items (search results or full menu).
+  const displayedItems = searching ? searchResults : branchMenu.items;
+  const lb = useMenuLightbox(displayedItems);
 
   // Scroll-spy: highlight the category pill for the section in view.
   useEffect(() => {
@@ -133,10 +99,9 @@ export function FullMenu() {
 
   return (
     <section className="container-page pb-24">
-      {/* Top back link */}
+      {/* Top back link → landing menu section */}
       <Link
-        href={fallbackHref}
-        onClick={handleBack}
+        href={BACK_HREF}
         className="group inline-flex items-center gap-2 text-sm font-medium text-white/65 transition hover:text-brand-red"
       >
         <ArrowLeft
@@ -281,7 +246,12 @@ export function FullMenu() {
             ) : (
               <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 {searchResults.map((item, idx) => (
-                  <DishCard key={item.id} item={item} priority={idx < 6} />
+                  <DishCard
+                    key={item.id}
+                    item={item}
+                    priority={idx < 6}
+                    onImageClick={() => lb.openFor(item.id)}
+                  />
                 ))}
               </div>
             )
@@ -311,6 +281,7 @@ export function FullMenu() {
                           key={item.id}
                           item={item}
                           priority={catIdx === 0 && idx < 4}
+                          onImageClick={() => lb.openFor(item.id)}
                         />
                       ))}
                     </div>
@@ -332,18 +303,10 @@ export function FullMenu() {
         </>
       )}
 
-      {/* Bottom CTAs */}
+      {/* Bottom CTAs — order swapped: back first, order online second */}
       <div className="mt-16 flex flex-col items-center justify-center gap-3 sm:flex-row">
-        <Link href="/#order" className="btn-primary group min-w-[220px] justify-center">
-          {t(translations.hero.ctaOrder)}
-          <ArrowRight
-            className="h-4 w-4 transition group-hover:translate-x-0.5"
-            strokeWidth={2}
-          />
-        </Link>
         <Link
-          href={fallbackHref}
-          onClick={handleBack}
+          href={BACK_HREF}
           className="btn-ghost group min-w-[220px] justify-center"
         >
           <ArrowLeft
@@ -352,7 +315,24 @@ export function FullMenu() {
           />
           {t(translations.common.backToHome)}
         </Link>
+        <Link href="/#order" className="btn-primary group min-w-[220px] justify-center">
+          {t(translations.hero.ctaOrder)}
+          <ArrowRight
+            className="h-4 w-4 transition group-hover:translate-x-0.5"
+            strokeWidth={2}
+          />
+        </Link>
       </div>
+
+      {lb.openIndex !== null && (
+        <Lightbox
+          images={lb.images}
+          index={lb.openIndex}
+          onClose={lb.close}
+          onPrev={lb.prev}
+          onNext={lb.next}
+        />
+      )}
     </section>
   );
 }

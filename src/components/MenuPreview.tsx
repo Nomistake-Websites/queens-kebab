@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { DishCard } from "./DishCard";
 import { MenuCategoryTabs } from "./MenuCategoryTabs";
+import { Lightbox } from "./Lightbox";
 import {
   MENU_FILTER_ORDER,
   MENU_ITEMS,
@@ -14,6 +15,7 @@ import {
 } from "@/data/menu";
 import { translations } from "@/data/translations";
 import { useLanguage } from "@/lib/language";
+import { useMenuLightbox } from "@/hooks/useMenuLightbox";
 
 /**
  * Horizontal food carousel for the landing page menu preview.
@@ -35,6 +37,8 @@ export function MenuPreview() {
     category === "bestsellers"
       ? getBestsellers()
       : MENU_ITEMS.filter((i) => i.category === category);
+
+  const lb = useMenuLightbox(items);
 
   const updateArrows = useCallback(() => {
     const el = scrollerRef.current;
@@ -68,24 +72,12 @@ export function MenuPreview() {
 
   return (
     <div className="space-y-8">
-      {/* Top row: category tabs + a visible "full menu" button */}
-      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-        <MenuCategoryTabs
-          categories={MENU_FILTER_ORDER}
-          active={category}
-          onSelect={setCategory}
-        />
-        <Link
-          href="/menu"
-          className="btn-ghost group shrink-0 self-start lg:self-auto"
-        >
-          {t(translations.sections.menuPreview.viewFullMenu)}
-          <ArrowRight
-            className="ml-1 h-4 w-4 transition group-hover:translate-x-0.5"
-            strokeWidth={2}
-          />
-        </Link>
-      </div>
+      {/* Category tabs */}
+      <MenuCategoryTabs
+        categories={MENU_FILTER_ORDER}
+        active={category}
+        onSelect={setCategory}
+      />
 
       {/* Carousel with edge fades + desktop arrows */}
       <div className="relative -mx-4 sm:mx-0">
@@ -144,7 +136,11 @@ export function MenuPreview() {
               key={item.id}
               className="relative snap-start shrink-0 basis-[82%] transition-transform hover:z-10 sm:basis-[48%] lg:basis-[32%] xl:basis-[28%]"
             >
-              <DishCard item={item} priority={idx < 2} />
+              <DishCard
+                item={item}
+                priority={idx < 2}
+                onImageClick={() => lb.openFor(item.id)}
+              />
             </div>
           ))}
           {/* Trailing spacer so last card can snap nicely on mobile */}
@@ -154,10 +150,7 @@ export function MenuPreview() {
 
       {/* Strong CTA — directly under the carousel, never far below */}
       <div className="flex flex-col items-center gap-3 pt-1 sm:pt-2">
-        <Link
-          href="/menu?returnTo=%2F%23menu"
-          className="btn-primary group min-w-[260px] justify-center"
-        >
+        <Link href="/menu" className="btn-primary group min-w-[260px] justify-center">
           {t(translations.sections.menuPreview.viewFullMenu)}
           <ArrowRight
             className="ml-1 h-4 w-4 transition group-hover:translate-x-0.5"
@@ -165,6 +158,16 @@ export function MenuPreview() {
           />
         </Link>
       </div>
+
+      {lb.openIndex !== null && (
+        <Lightbox
+          images={lb.images}
+          index={lb.openIndex}
+          onClose={lb.close}
+          onPrev={lb.prev}
+          onNext={lb.next}
+        />
+      )}
     </div>
   );
 }

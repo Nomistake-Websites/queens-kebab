@@ -10,6 +10,8 @@ interface DishCardProps {
   item: MenuItem;
   variant?: "default" | "compact";
   priority?: boolean;
+  /** When provided and the item has an image, the image opens a lightbox. */
+  onImageClick?: () => void;
 }
 
 const TAG_STYLE: Record<MenuTag, string> = {
@@ -22,25 +24,46 @@ const TAG_STYLE: Record<MenuTag, string> = {
   drink: "bg-sky-500/15 text-sky-200 border border-sky-400/30",
 };
 
-export function DishCard({ item, variant = "default", priority = false }: DishCardProps) {
+/** Tags hidden from the UI (kept in data, just not shown on cards). */
+const HIDDEN_TAGS: ReadonlySet<MenuTag> = new Set<MenuTag>(["halal"]);
+
+export function DishCard({
+  item,
+  variant = "default",
+  priority = false,
+  onImageClick,
+}: DishCardProps) {
   const { t } = useLanguage();
   const [imgFailed, setImgFailed] = useState(false);
   const compact = variant === "compact";
+  const hasImage = Boolean(item.image) && !imgFailed;
+  const clickable = hasImage && !!onImageClick;
+  const visibleTags = (item.tags ?? []).filter((tag) => !HIDDEN_TAGS.has(tag));
 
   return (
-    <article
-      className={`group card relative overflow-hidden transition hover:-translate-y-1 hover:border-white/15 hover:shadow-glow ${
-        compact ? "" : ""
-      }`}
-    >
+    <article className="group card relative overflow-hidden transition hover:-translate-y-1 hover:border-white/15 hover:shadow-glow">
       <div
         className={`relative w-full overflow-hidden ${
           compact ? "aspect-[16/10]" : "aspect-[4/3]"
-        }`}
+        } ${clickable ? "cursor-zoom-in" : ""}`}
+        {...(clickable
+          ? {
+              role: "button",
+              tabIndex: 0,
+              "aria-label": t(item.name),
+              onClick: onImageClick,
+              onKeyDown: (e: React.KeyboardEvent) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  onImageClick();
+                }
+              },
+            }
+          : {})}
       >
-        {item.image && !imgFailed ? (
+        {hasImage ? (
           <Image
-            src={item.image}
+            src={item.image as string}
             alt={t(item.name)}
             fill
             sizes="(max-width: 768px) 92vw, (max-width: 1200px) 45vw, 30vw"
@@ -67,9 +90,9 @@ export function DishCard({ item, variant = "default", priority = false }: DishCa
           className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent"
         />
 
-        {item.tags && item.tags.length > 0 && (
+        {visibleTags.length > 0 && (
           <div className="absolute left-3 top-3 flex flex-wrap gap-1.5">
-            {item.tags.map((tag) => (
+            {visibleTags.map((tag) => (
               <span
                 key={tag}
                 className={`rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider ${TAG_STYLE[tag]}`}
@@ -81,13 +104,13 @@ export function DishCard({ item, variant = "default", priority = false }: DishCa
         )}
 
         <div className="absolute bottom-3 right-3">
-          <span className="rounded-full bg-black/60 px-3 py-1 text-xs font-semibold text-white backdrop-blur">
+          <span className="rounded-full bg-black/65 px-3.5 py-1.5 text-sm font-bold text-white backdrop-blur sm:text-base">
             {item.price}
           </span>
         </div>
       </div>
 
-      <div className={`flex flex-col gap-1.5 p-4 sm:p-5`}>
+      <div className="flex flex-col gap-1.5 p-4 sm:p-5">
         <h3 className="text-base font-semibold text-white sm:text-lg">
           {typeof item.number === "number" && (
             <span className="mr-1.5 font-mono text-sm text-brand-red">
